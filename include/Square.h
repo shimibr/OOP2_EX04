@@ -5,7 +5,8 @@ class Square
 {
 public:
 	Square(sf::Vector2f position,sf::Color color);
-	void draw(sf::RenderWindow& window);
+	~Square() = default;
+	virtual void draw(sf::RenderWindow& window);
 
 protected:
 	sf::Vector2f m_position;

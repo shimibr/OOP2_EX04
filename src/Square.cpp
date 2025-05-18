@@ -8,7 +8,7 @@ Square::Square(sf::Vector2f position, sf::Color color
 	m_square.setPosition(m_position);
 }
 //==================================
-void Square::draw(sf::RenderWindow& window)
+void Square::draw(sf::RenderWindow& window) 
 {
 	m_square.setPosition(m_position);
 	window.draw(m_square);
