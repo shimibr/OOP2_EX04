@@ -6,7 +6,7 @@ Enemy::Enemy(sf::Vector2f position, sf::Color color)
 	fillSquares();
 }
 //==================================
-void Enemy::move(sf::Vector2f time) 
+void Enemy::move(sf::Vector2f time)
 {
 	switch (m_direction)
 	{

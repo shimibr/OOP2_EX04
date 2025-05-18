@@ -7,7 +7,7 @@ class Object : public Square
 {
 public:
 	Object(sf::Vector2f position,sf::Color color, int speed);
-	virtual ~Object();
+	virtual ~Object() {};
 	virtual void move(sf::Vector2f time);
 	virtual void draw(sf::RenderWindow& window) override{}
 
