@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Square.h"
+#include "Object.h"
 
 
 
@@ -13,9 +13,10 @@ public:
 
 private:
 
-	void fillSquares();
-	void drawSquares();
+	void fillObject();
+	void drawObject();
 
 	sf::RenderWindow m_window;
-	std::vector<std::unique_ptr<Square>> m_squares;
+	std::vector<std::unique_ptr<Object>> m_object;
+	sf::Clock m_clock;
 };

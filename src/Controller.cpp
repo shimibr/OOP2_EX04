@@ -1,4 +1,5 @@
 #include "Controller.h"
+#include "Enemy.h"
 
 Controller::Controller()
 {
@@ -6,8 +7,8 @@ Controller::Controller()
 
 void Controller::run()
 {
-	fillSquares();
-
+	fillObject();
+	m_clock.restart();
 	m_window.create(sf::VideoMode(800, 600), "SFML works!");
 	m_window.setFramerateLimit(60);
 	while (m_window.isOpen())
@@ -18,27 +19,33 @@ void Controller::run()
 			if (event.type == sf::Event::Closed)
 				m_window.close();
 		}
+
+
+		float time = m_clock.restart().asSeconds();
+		for (auto& object : m_object)
+		{
+			object->move(sf::Vector2f(time, time));
+		}
+
+
 		m_window.clear(sf::Color::Blue);
-		drawSquares();
+		drawObject();
 		m_window.display();
 	}
 }
 //==================================
-void Controller::fillSquares() // פה צריך למלאת את המערך של המלבנים
+void Controller::fillObject() // פה צריך למלאת את המערך של המלבנים
 {
-	for (int i = 0; i < 10; ++i)
+	for (int i = 0; i < 3; ++i)
 	{
-		for (int j = 0; j < 10; ++j)
-		{
-			m_squares.push_back(std::make_unique<Square>(sf::Vector2f(i * 30.f, j * 30.f), sf::Color::Red));
-		}
+			m_object.push_back(std::make_unique<Enemy>(sf::Vector2f(i * 100.f, i * 100.f), sf::Color::Red));
 	}
 }
 //==================================
-void Controller::drawSquares()
+void Controller::drawObject()
 {
-	for (const auto& square : m_squares)
+	for (const auto& object : m_object)
 	{
-		square->draw(m_window);
+		object->draw(m_window);
 	}
 }
