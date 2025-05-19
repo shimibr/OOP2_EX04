@@ -27,7 +27,7 @@ void Controller::run()
 			object->move(sf::Vector2f(time, time));
 		}
 
-
+		checkCollision();
 		m_window.clear(sf::Color::Blue);
 		drawObject();
 		m_window.display();
@@ -48,5 +48,20 @@ void Controller::drawObject()
 	for (const auto& object : m_object)
 	{
 		object->draw(m_window);
+	}
+}
+//==================================
+void Controller::checkCollision()
+{
+	for (int i = 0; i < m_object.size(); ++i)
+	{
+		for (int j = i + 1; j < m_object.size(); ++j)
+		{
+			if (m_object[i]->getGlobalBounds().intersects(m_object[j]->getGlobalBounds()))
+			{
+				m_object[i]->collision(m_object[j].get());
+				m_object[j]->collision(m_object[i].get());
+			}
+		}
 	}
 }

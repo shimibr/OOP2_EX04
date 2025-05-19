@@ -13,3 +13,8 @@ void Square::draw(sf::RenderWindow& window)
 	m_square.setPosition(m_position);
 	window.draw(m_square);
 }
+//==================================
+sf::FloatRect Square::getGlobalBounds() const
+{
+	return m_square.getGlobalBounds();
+}

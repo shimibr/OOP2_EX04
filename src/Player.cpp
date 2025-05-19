@@ -1,12 +1,31 @@
 #pragma once
 #include "Player.h"
+#include <iostream>
 
 Player::Player(sf::Vector2f position, sf::Color color)
-	: Object(position, color, 10) { }
+	: Object(position, color, 30) { }
 //==================================
 void Player::draw(sf::RenderWindow& window)
 {
 	Square::draw(window);
+}
+//==================================
+void Player::collision(Object* other)
+{
+	if (this->getGlobalBounds().intersects(other->getGlobalBounds()))
+		std::cout << "vdv";
+}
+//==================================
+void Player::collideWithPlayer(Player* player)
+{
+}
+//==================================
+void Player::collideWithEnemy(Enemy* enemy)
+{
+}
+//==================================
+void Player::collideWithSquare(Square* square)
+{
 }
 //==================================
 void Player::move(sf::Vector2f time)

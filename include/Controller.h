@@ -16,6 +16,7 @@ private:
 
 	void fillObject();
 	void drawObject();
+	void checkCollision();
 
 	sf::RenderWindow m_window;
 	std::vector<std::unique_ptr<Object>> m_object;
