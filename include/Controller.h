@@ -20,5 +20,6 @@ private:
 
 	sf::RenderWindow m_window;
 	std::vector<std::unique_ptr<Object>> m_object;
+	std::vector<std::vector<Square>> m_squares;
 	sf::Clock m_clock;
 };

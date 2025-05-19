@@ -9,7 +9,6 @@ public:
 	Object(sf::Vector2f position,sf::Color color, int speed);
 	virtual ~Object() {};
 	virtual void move(sf::Vector2f time);
-	virtual void draw(sf::RenderWindow& window) override{}
 
 	virtual void collision(Object* other) = 0;
 	virtual void collideWithPlayer(class Player* player) = 0;
