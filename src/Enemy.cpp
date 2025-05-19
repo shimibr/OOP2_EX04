@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include <iostream>
 
 Enemy::Enemy(sf::Vector2f position, sf::Color color)
 	: Object(position, color, 10)
@@ -35,6 +36,21 @@ void Enemy::draw(sf::RenderWindow& window)
 		}
 	}
 	Square::draw(window);
+}
+//==================================
+void Enemy::collision(Object* other)
+{
+	if (this->getGlobalBounds().intersects(other->getGlobalBounds()))
+		std::cout << "vdv";
+}
+//==================================
+void Enemy::collideWithPlayer(Player* player)
+{
+}
+//==================================
+void Enemy::collideWithSquare(Square* square)
+{
+
 }
 //==================================
 void Enemy::fillSquares()
