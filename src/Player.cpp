@@ -1,8 +1,8 @@
 #pragma once
 #include "Player.h"
 
-Player::Player(sf::Vector2f position, sf::Color color)
-	: Object(position, color, 10) { }
+Player::Player(sf::Vector2f position)
+	: Object(position, sf::Color::Green, 50) { }
 //==================================
 void Player::draw(sf::RenderWindow& window)
 {

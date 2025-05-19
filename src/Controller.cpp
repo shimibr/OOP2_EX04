@@ -36,7 +36,7 @@ void Controller::run()
 //==================================
 void Controller::fillObject() // פה צריך למלאת את המערך של המלבנים
 {
-	m_object.push_back(std::make_unique<Player>(sf::Vector2f(400.f, 400.f), sf::Color::Yellow));
+	m_object.push_back(std::make_unique<Player>(sf::Vector2f(400.f, 400.f)));
 	for (int i = 0; i < 3; ++i)
 	{
 			m_object.push_back(std::make_unique<Enemy>(sf::Vector2f(i * 100.f, i * 100.f), sf::Color::Red));
