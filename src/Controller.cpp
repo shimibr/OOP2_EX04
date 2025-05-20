@@ -1,6 +1,6 @@
+#pragma once
 #include "Controller.h"
 #include "Enemy.h"
-#include "Player.h"
 
 Controller::Controller()
 {
@@ -8,10 +8,13 @@ Controller::Controller()
 
 void Controller::run()
 {
-	fillObject();
 	m_clock.restart();
 	m_window.create(sf::VideoMode(800, 600), "SFML works!");
 	m_window.setFramerateLimit(60);
+
+	fillSquares();
+	fillObject();
+
 	while (m_window.isOpen())
 	{
 		sf::Event event;
@@ -22,25 +25,56 @@ void Controller::run()
 		}
 
 		float time = m_clock.restart().asSeconds();
-		for (auto& object : m_object)
+
+		for (int i = 0; i < m_object.size(); i++)
 		{
-			object->move(sf::Vector2f(time, time));
+			m_object[i]->move(sf::Vector2f(time, time));
 		}
 
 		checkCollision();
 		m_window.clear(sf::Color::Blue);
+		drawSquares();
 		drawObject();
 		m_window.display();
 	}
 }
 //==================================
+void Controller::fillSquares()  
+{  
+	sf::Vector2f size = sf::Vector2f(m_window.getSize().x / 20, m_window.getSize().y / 20);
+   for (int i = 0; i < size.x; i++)
+   {  
+       std::vector<SquareField> row;
+       for (int j = 0; j < size.y; j++)
+       {  
+		   if(i == 0 || j == 0 || i == size.x - 1 || j ==  size.y - 1)
+			   row.emplace_back(sf::Vector2f(i * 20, j * 20), sf::Color::Cyan , SquareType::Closed);
+		   else
+           row.emplace_back(sf::Vector2f(i * 20, j * 20), sf::Color::Black , SquareType::Open);
+       }  
+       m_squares.push_back(row);  
+   }  
+}
+//==================================
 void Controller::fillObject() // פה צריך למלאת את המערך של המלבנים
 {
-	m_object.push_back(std::make_unique<Player>(sf::Vector2f(400.f, 400.f)));
+	m_object.push_back(std::make_unique<Player>(sf::Vector2f(0,0)));
 	for (int i = 0; i < 3; ++i)
 	{
-			m_object.push_back(std::make_unique<Enemy>(sf::Vector2f(i * 100.f, i * 100.f), sf::Color::Red));
+			m_object.push_back(std::make_unique<Enemy>(sf::Vector2f((i+1) * 100, (i+1) * 100), sf::Color::Red));
 	}
+}
+//==================================
+void Controller::drawSquares()
+{
+	for (int i = 0; i < m_squares.size(); ++i)
+	{
+		for (int j = 0; j < m_squares[i].size(); ++j)
+		{
+			m_squares[i][j].draw(m_window);
+		}
+	}
+
 }
 //==================================
 void Controller::drawObject()
@@ -53,14 +87,28 @@ void Controller::drawObject()
 //==================================
 void Controller::checkCollision()
 {
+	checkSquaresCollision();
 	for (int i = 0; i < m_object.size(); ++i)
 	{
 		for (int j = i + 1; j < m_object.size(); ++j)
 		{
-			if (m_object[i]->getGlobalBounds().intersects(m_object[j]->getGlobalBounds()))
-			{
 				m_object[i]->collision(m_object[j].get());
 				m_object[j]->collision(m_object[i].get());
+		}
+	}
+
+
+}
+//=======================================
+void Controller::checkSquaresCollision()
+{
+	for (int i = 0; i < m_object.size(); ++i)
+	{
+		for (int j = 0; j < m_squares.size(); ++j)
+		{
+			for (int k = 0; k < m_squares[j].size(); ++k)
+			{
+					m_squares[j][k].collision(m_object[i].get());
 			}
 		}
 	}

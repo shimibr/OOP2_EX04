@@ -6,3 +6,9 @@ enum Direction
 	Up,
 	Down,
 };
+enum class SquareType
+{
+	Closed,
+	Open,
+	Trail,
+};

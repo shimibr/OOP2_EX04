@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Square.h"
 #include "Io.h"
+#include "Square.h"
 
 class Object : public Square
 {
@@ -11,9 +11,9 @@ public:
 	virtual void move(sf::Vector2f time);
 
 	virtual void collision(Object* other) = 0;
-	virtual void collideWithPlayer(class Player* player) = 0;
-	virtual void collideWithEnemy(class Enemy* enemy) = 0;
-	virtual void collideWithSquare(Square* square) = 0;
+	virtual void collideWith(class Player* player) = 0;
+	virtual void collideWith(class Enemy* enemy) = 0;
+	virtual void collideWith(SquareField* squareField, SquareType squareType) = 0;
 
 protected:
 	Direction m_direction;

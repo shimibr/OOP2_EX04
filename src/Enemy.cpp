@@ -1,5 +1,9 @@
+#pragma once
+
 #include "Enemy.h"
 #include <iostream>
+#include "SquareField.h"
+
 
 Enemy::Enemy(sf::Vector2f position, sf::Color color)
 	: Object(position, color, 10)
@@ -31,11 +35,12 @@ void Enemy::collision(Object* other)
 		std::cout << "vdv";
 }
 //==================================
-void Enemy::collideWithPlayer(Player* player)
+void Enemy::collideWith(Player* player)
 {
 }
 //==================================
-void Enemy::collideWithSquare(Square* square)
+void Enemy::collideWith(SquareField* squareField, SquareType squareType)
 {
-
+	if (this->getGlobalBounds().intersects(squareField->getGlobalBounds()) && squareType == SquareType::Closed)
+	{ }
 }

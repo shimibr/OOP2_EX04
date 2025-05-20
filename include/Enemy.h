@@ -2,6 +2,7 @@
 
 #include "Object.h"
 
+
 class Enemy : public Object
 {
 public:
@@ -10,9 +11,9 @@ public:
 	void move(sf::Vector2f time) override;
 
 	void collision(Object* other) override;
-	void collideWithPlayer(class Player* player) override;
-	void collideWithEnemy(class Enemy* enemy) override {}
-	void collideWithSquare(Square* square) override;
+	void collideWith(class Player* player) override;
+	void collideWith(class Enemy* enemy) override {}
+	void collideWith(SquareField* squareField, SquareType squareType) override;
 
 private:
 	
