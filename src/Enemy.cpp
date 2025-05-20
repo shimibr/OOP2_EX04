@@ -6,27 +6,13 @@
 
 
 Enemy::Enemy(sf::Vector2f position, sf::Color color)
-	: Object(position, color, 10)
+	: Object(position, color, 100)
 {
-}
-//==================================
-void Enemy::move(sf::Vector2f time)
-{
-	switch (m_direction)
+	do
 	{
-	case Right: time.x *= -1;
-		break;
-	case Left: time.y *= -1;
-		break;
-	case Up:
-		break;
-	case Down: time.x *= -1; time.y *= -1;
-		break;
-	default:
-		break;
-	}
-
-	Object::move(time);
+		m_directionX = 4 - (rand() % 8);
+		m_directionY = 4 - (rand() % 8);
+	} while (m_directionX == 0 || m_directionY == 0);
 }
 //==================================
 void Enemy::collision(Object* other)
@@ -42,5 +28,7 @@ void Enemy::collideWith(Player* player)
 void Enemy::collideWith(SquareField* squareField, SquareType squareType)
 {
 	if (this->getGlobalBounds().intersects(squareField->getGlobalBounds()) && squareType == SquareType::Closed)
-	{ }
+	{
+		moveBack();
+	}
 }

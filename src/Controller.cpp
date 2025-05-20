@@ -25,14 +25,13 @@ void Controller::run()
 		}
 
 		float time = m_clock.restart().asSeconds();
-
-		for (int i = 0; i < m_object.size(); i++)
+		for (int i = 0; i < 2; i++)
 		{
-			m_object[i]->move(sf::Vector2f(time, time));
+			moveObject(time);
+			checkCollision();
 		}
 
-		checkCollision();
-		m_window.clear(sf::Color::Blue);
+		m_window.clear();
 		drawSquares();
 		drawObject();
 		m_window.display();
@@ -82,6 +81,14 @@ void Controller::drawObject()
 	for (const auto& object : m_object)
 	{
 		object->draw(m_window);
+	}
+}
+//==================================
+void Controller::moveObject(float time)
+{
+	for (int i = 0; i < m_object.size(); ++i)
+	{
+		m_object[i]->move(time);
 	}
 }
 //==================================

@@ -17,6 +17,7 @@ private:
 	void fillObject();
 	void drawSquares();
 	void drawObject();
+	void moveObject(float time);
 	void checkCollision();
 	void checkSquaresCollision();
 

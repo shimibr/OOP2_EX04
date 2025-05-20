@@ -4,7 +4,11 @@
 #include "SquareField.h"
 
 Player::Player(sf::Vector2f position)
-	: Object(position, sf::Color::Green, 200) { }
+	: Object(position, sf::Color::Green, 200) {
+
+	m_directionX = 0;
+	m_directionY = 0;
+}
 //==================================
 void Player::draw(sf::RenderWindow& window)
 {
@@ -33,75 +37,37 @@ void Player::collideWith(SquareField* squareField, SquareType squareType)
 	
 }
 //==================================
-void Player::move(sf::Vector2f time)
+void Player::move(float time)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		if (m_direction == Direction::Up || m_direction == Direction::Down)
-		{
-			if ((int)m_position.y % 20 <= 2 || (int)m_position.y % 20 >= 18)
-			{
-				m_position.y = (int)m_position.y - (int)m_position.y % 20 + ((int)m_position.y % 20 >= 18 ? 20 : 0);
-				m_direction = Direction::Left;
-				return;
-			}
-		}
-		else m_direction = Direction::Left;
-       
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		if (m_direction == Direction::Up || m_direction == Direction::Down)
-		{
-			if ((int)m_position.y % 20 <= 2 || (int)m_position.y % 20 >= 18)
-			{
-				m_position.y = (int)m_position.y - (int)m_position.y % 20 + ((int)m_position.y % 20 >= 18 ? 20 : 0);
-				m_direction = Direction::Right;
-				return;
-			}
-		}
-		else m_direction = Direction::Right;
-
-
-        
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		if (m_direction == Direction::Left || m_direction == Direction::Right)
-		{
-			if ((int)m_position.x % 20 <= 2 || (int)m_position.x % 20 >= 18)
-			{
-				m_position.x = (int)m_position.x - (int)m_position.x % 20 + ((int)m_position.x % 20 >= 18 ? 20 : 0);
-				m_direction = Direction::Up;
-				return;
-			}
-		}
-		else m_direction = Direction::Up;
-        
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		if (m_direction == Direction::Left || m_direction == Direction::Right)
-		{
-			if ((int)m_position.x % 20 <= 2 || (int)m_position.x % 20 >= 18)
-			{
-				m_position.x = (int)m_position.x - (int)m_position.x % 20 + ((int)m_position.x % 20 >= 18? 20 : 0);
-				m_direction = Direction::Down;
-				return;
-			}
-		}
-		else m_direction = Direction::Down;
-        
-    else
-        return;
-
-	switch (m_direction)
 	{
-	case Right: time = { std::abs(time.x), 0 };
-		break;
-	case Left:  time = { -std::abs(time.x), 0 };
-		break;
-	case Up: time = { 0, -std::abs(time.y) };
-		break;
-	case Down: time = { 0, std::abs(time.y) };
-		break;
-	default:
-		break;
+		m_position.y = int(m_position.y / 20) * 20;
+		m_directionX = -1;
+		m_directionY = 0;
 	}
-
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	{
+		m_position.y = int(m_position.y / 20) * 20;
+		m_directionX = 1;
+		m_directionY = 0;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	{
+		m_position.x = int(m_position.x / 20) * 20;
+		m_directionX = 0;
+		m_directionY = -1;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	{
+		m_position.x = int(m_position.x / 20) * 20;
+		m_directionX = 0;
+		m_directionY = 1;
+	}
+	else
+	{
+		m_directionX = 0;
+		m_directionY = 0;
+	}
 
     Object::move(time);
 }

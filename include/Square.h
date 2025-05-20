@@ -19,6 +19,7 @@ public:
 	virtual void collideWith(SquareField* squareField, SquareType squareType) = 0;
 
 protected:
+	void setPosition() { m_square.setPosition(m_position);}
 	sf::Vector2f m_position;
 	void  setColor(sf::Color color) { m_square.setFillColor(color); }
 private:

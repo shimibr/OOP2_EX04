@@ -8,7 +8,7 @@ class Object : public Square
 public:
 	Object(sf::Vector2f position,sf::Color color, int speed);
 	virtual ~Object() {};
-	virtual void move(sf::Vector2f time);
+	virtual void move(float time);
 
 	virtual void collision(Object* other) = 0;
 	virtual void collideWith(class Player* player) = 0;
@@ -16,7 +16,11 @@ public:
 	virtual void collideWith(SquareField* squareField, SquareType squareType) = 0;
 
 protected:
-	Direction m_direction;
+	void moveBack();
+	int m_directionX;
+	int m_directionY;
 private:
+	float m_timeMove;
+	bool m_moveX = true;
 	int m_speed;
 };
