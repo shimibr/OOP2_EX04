@@ -11,6 +11,7 @@ public:
 	virtual void move(float time);
 
 	virtual void collision(Object* other) = 0;
+	virtual void collision(Square* Square) = 0;
 	virtual void collideWith(class Player* player) = 0;
 	virtual void collideWith(class Enemy* enemy) = 0;
 	virtual void collideWith(SquareField* squareField, SquareType squareType) = 0;

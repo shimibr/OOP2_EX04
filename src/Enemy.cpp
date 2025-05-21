@@ -14,11 +14,21 @@ Enemy::Enemy(sf::Vector2f position, sf::Color color)
 		m_directionY = 4 - (rand() % 8);
 	} while (m_directionX == 0 || m_directionY == 0);
 }
-//==================================
+//=========================
+void Enemy::collision(Square* Square)
+{
+	if (this->getGlobalBounds().intersects(Square->getGlobalBounds()))
+	{
+		Square->collideWith(this);
+	}
+}
+//=======================================
 void Enemy::collision(Object* other)
 {
 	if (this->getGlobalBounds().intersects(other->getGlobalBounds()))
-		std::cout << "vdv";
+	{
+		other->collideWith(this);
+	}
 }
 //==================================
 void Enemy::collideWith(Player* player)

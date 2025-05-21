@@ -1,9 +1,12 @@
 #include "Square.h"
+#include <Io.h>
+
+bool Square::m_playerDead = false;
 
 Square::Square(sf::Vector2f position, sf::Color color) 
 	: m_position(position)
 {
-	m_square.setSize(sf::Vector2f(20.f, 20.f));
+	m_square.setSize(sf::Vector2f(SQUARE_SIZE, SQUARE_SIZE));
 	m_square.setFillColor(color);
 	m_square.setPosition(m_position);
 }

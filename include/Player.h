@@ -8,6 +8,8 @@ public:
 	virtual ~Player() {};
 	void move(float time) override;
 	void draw(sf::RenderWindow& window) override;
+
+	void collision(Square* Square) override;
 	void collision(Object* other) override;
 	void collideWith(class Player* player) override;
 	void collideWith(class Enemy* enemy) override;

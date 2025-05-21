@@ -1,6 +1,7 @@
 #pragma once
 #include "Controller.h"
 #include "Enemy.h"
+#include <iostream>//
 
 Controller::Controller()
 {
@@ -17,6 +18,9 @@ void Controller::run()
 
 	while (m_window.isOpen())
 	{
+		if (Square::playerIsDead())
+			std::cout << "dead";//
+
 		sf::Event event;
 		while (m_window.pollEvent(event))
 		{
@@ -40,16 +44,16 @@ void Controller::run()
 //==================================
 void Controller::fillSquares()  
 {  
-	sf::Vector2f size = sf::Vector2f(m_window.getSize().x / 20, m_window.getSize().y / 20);
+	sf::Vector2f size = sf::Vector2f(m_window.getSize().x / SQUARE_SIZE, m_window.getSize().y / SQUARE_SIZE);
    for (int i = 0; i < size.x; i++)
    {  
        std::vector<SquareField> row;
        for (int j = 0; j < size.y; j++)
        {  
 		   if(i == 0 || j == 0 || i == size.x - 1 || j ==  size.y - 1)
-			   row.emplace_back(sf::Vector2f(i * 20, j * 20), sf::Color::Cyan , SquareType::Closed);
+			   row.emplace_back(sf::Vector2f(i * SQUARE_SIZE, j * SQUARE_SIZE), sf::Color::Cyan , SquareType::Closed);
 		   else
-           row.emplace_back(sf::Vector2f(i * 20, j * 20), sf::Color::Black , SquareType::Open);
+           row.emplace_back(sf::Vector2f(i * SQUARE_SIZE, j * SQUARE_SIZE), sf::Color::Black , SquareType::Open);
        }  
        m_squares.push_back(row);  
    }  
@@ -115,7 +119,7 @@ void Controller::checkSquaresCollision()
 		{
 			for (int k = 0; k < m_squares[j].size(); ++k)
 			{
-					m_squares[j][k].collision(m_object[i].get());
+				m_object[i]->collision(&m_squares[j][k]);
 			}
 		}
 	}
