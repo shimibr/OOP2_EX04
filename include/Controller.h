@@ -23,6 +23,6 @@ private:
 
 	sf::RenderWindow m_window;
 	std::vector<std::unique_ptr<Object>> m_object;
-	std::vector<std::vector<SquareField>> m_squares;
+	std::vector<std::vector<std::unique_ptr <SquareField>>> m_squares;
 	sf::Clock m_clock;
 };

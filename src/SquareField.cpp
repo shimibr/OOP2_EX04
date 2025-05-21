@@ -6,7 +6,6 @@
 
 
 
-
 SquareField::SquareField(sf::Vector2f position, sf::Color color, SquareType squareType)
 	: Square(position, color), m_Type(squareType)
 {
