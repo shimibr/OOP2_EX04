@@ -3,8 +3,8 @@
 #include <iostream>
 #include "SquareField.h"
 
-Player::Player(sf::Vector2f position)
-	: Object(position, sf::Color::Green, 200) {
+Player::Player(sf::Vector2f position, int life)
+	: Object(position, sf::Color::Green, 200), m_life(life) {
 
 	m_directionX = 0;
 	m_directionY = 0;

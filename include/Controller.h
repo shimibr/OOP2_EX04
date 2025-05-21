@@ -20,9 +20,11 @@ private:
 	void moveObject(float time);
 	void checkCollision();
 	void checkSquaresCollision();
+	void ReadFileInfo(std::ifstream& file);
 
 	sf::RenderWindow m_window;
 	std::vector<std::unique_ptr<Object>> m_object;
 	std::vector<std::vector<std::unique_ptr <SquareField>>> m_squares;
 	sf::Clock m_clock;
+	std::vector<int> m_info;
 };
