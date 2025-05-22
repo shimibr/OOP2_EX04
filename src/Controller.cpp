@@ -54,7 +54,7 @@ void Controller::run()
 //==================================
 void Controller::fillSquares()  
 {  
-	sf::Vector2f size = sf::Vector2f(m_window.getSize().x / SQUARE_SIZE, m_window.getSize().y / SQUARE_SIZE);
+	sf::Vector2f size = sf::Vector2f(m_window.getSize().x / SQUARE_SIZE, (m_window.getSize().y / SQUARE_SIZE) - 2);
 
 	m_squares.resize(size.x);
 	for (int i = 0; i < m_squares.size();i++)
@@ -98,6 +98,7 @@ void Controller::drawObject()
 	{
 		object->draw(m_window);
 	}
+	printInfo();
 }
 //==================================
 void Controller::moveObject(float time)
@@ -159,4 +160,20 @@ void Controller::ReadFileInfo(std::ifstream& file)
 		}
 	}
 
+}
+//=======================================
+void Controller::printInfo()
+{
+	sf::Font font;
+	font.loadFromFile("C:/Windows/Fonts/arial.ttf");
+	sf::Text text;
+	text.setFont(font);
+	text.setCharacterSize(24);
+	text.setFillColor(sf::Color::White);
+	text.setString("Player life: " + std::to_string(m_info[1]));
+	text.setPosition(m_window.getSize().x - (m_window.getSize().x * 0.75), m_window.getSize().y - 40);
+	m_window.draw(text);
+	text.setString("Player score: " + std::to_string(m_info[0]));
+	text.setPosition(m_window.getSize().x - (m_window.getSize().x * 0.50), m_window.getSize().y - 40);
+	m_window.draw(text);
 }
