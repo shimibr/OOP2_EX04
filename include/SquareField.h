@@ -12,11 +12,12 @@ public:
 	virtual void collision(Object* other) = 0;
 	virtual void collideWith(class Player* player) = 0;
 	virtual void collideWith(class Enemy* enemy) = 0;
+	SquareType isChanged() const { return m_changeToType;}
 	
 protected:
 	void checkSquareFieldToTrail(std::unique_ptr <SquareField>& squareField);
 
+	SquareType m_changeToType = SquareType::Nothing;
 private:
 
-	SquareType m_changeToType = SquareType::Nothing;
 };

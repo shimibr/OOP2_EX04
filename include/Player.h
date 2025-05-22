@@ -7,6 +7,9 @@ class Player : public Object
 public:
 	Player(sf::Vector2f position, int life);
 	virtual ~Player() {};
+
+	static bool isConquered();
+
 	void move(float time) override;
 	void draw(sf::RenderWindow& window) override;
 
@@ -21,8 +24,7 @@ public:
 
 
 private:
-	bool m_conquered = false;
-	sf::Vector2f m_lastPosition = { 0,0 };
-	std::vector<SquareFieldTrail> m_trail;
+	static bool m_conquered;
+	bool m_middleOfConquer = false;
 	int m_life;
 };

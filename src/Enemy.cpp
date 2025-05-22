@@ -47,9 +47,7 @@ void Enemy::collideWith(SquareFieldTrail* squareFieldTrail)
 //===================================
 void Enemy::collideWith(SquareFieldClosed* squareFieldClosed)
 {
-	if (this->getGlobalBounds().intersects(squareFieldClosed->getGlobalBounds()))
-		{
 			moveBack();
-		}
+		
 }
 //==================================

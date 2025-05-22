@@ -13,6 +13,8 @@ public:
 	void run();
 
 private:
+	bool fillSquaresConquere(int i, int j);
+	
 	void fillSquares();
 	void fillObject();
 	void drawSquares();
@@ -27,4 +29,6 @@ private:
 	std::vector<std::vector<std::unique_ptr <SquareField>>> m_squares;
 	sf::Clock m_clock;
 	std::vector<int> m_info;
+
+	sf::Vector2i m_lastTrail;
 };

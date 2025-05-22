@@ -44,12 +44,22 @@ void Controller::run()
 			moveObject(time);
 			checkCollision();
 		}
+		if (Player::isConquered())
+		{
+			std::cout << "conquered" << std::endl;
+			fillSquaresConquere(m_lastTrail.x, m_lastTrail.y);
+		}
 
 		m_window.clear();
 		drawSquares();
 		drawObject();
 		m_window.display();
 	}
+}
+//==================================
+bool Controller::fillSquaresConquere(int i,int j)
+{
+
 }
 //==================================
 void Controller::fillSquares()  
@@ -86,6 +96,11 @@ void Controller::drawSquares()
 	{
 		for (int j = 0; j < m_squares[i].size(); ++j)
 		{
+			if (m_squares[i][j]->isChanged() == SquareType::Trail)
+			{
+				m_lastTrail = sf::Vector2i(i, j);
+				m_squares[i][j] = std::make_unique<SquareFieldTrail>(sf::Vector2f(i * SQUARE_SIZE, j * SQUARE_SIZE));
+			}
 			m_squares[i][j]->draw(m_window);
 		}
 	}

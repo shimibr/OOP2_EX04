@@ -12,13 +12,13 @@ public:
 	Square(sf::Vector2f position,sf::Color color);
 	virtual ~Square() = default;
 	virtual void draw(sf::RenderWindow& window);
-	sf::FloatRect getGlobalBounds() const;
 
 	static bool playerIsDead() { return m_playerDead; }
 	virtual void collision(Object* other) = 0;
 	virtual void collideWith(class Player* player) = 0;
 	virtual void collideWith(class Enemy* enemy) = 0;
 
+	sf::FloatRect getGlobalBounds() const;
 protected:
 	void setPosition() { m_square.setPosition(m_position);}
 	void  setColor(sf::Color color) { m_square.setFillColor(color); }

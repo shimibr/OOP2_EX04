@@ -18,10 +18,7 @@ void SquareFieldOpen::collision(Object* other)
 //=================================
 void SquareFieldOpen::collideWith(Player* player)
 {
-	
-	/*if ((int)(this->getGlobalBounds().getPosition().x / 8) == (int)(player->getGlobalBounds().getPosition().x / 8)
-		&& (int)(this->getGlobalBounds().getPosition().y / 8) == (int)(player->getGlobalBounds().getPosition().y / 8))*/
-	
+	m_changeToType = SquareType::Trail;
 	player->collideWith(this);
 	
 }
