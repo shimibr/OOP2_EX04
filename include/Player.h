@@ -4,7 +4,7 @@
 class Player : public Object
 {
 public:
-	Player(sf::Vector2f position);
+	Player(sf::Vector2f position, int life);
 	virtual ~Player() {};
 	void move(float time) override;
 	void draw(sf::RenderWindow& window) override;
@@ -21,4 +21,5 @@ public:
 
 private:
 	void checkSquareFieldToTrail(std::unique_ptr <SquareField>& squareField);
+	int m_life;
 };

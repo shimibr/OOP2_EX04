@@ -5,6 +5,8 @@
 #include "SquareFieldOpen.h"
 #include <SquareFieldClosed.h>
 #include "SquareFieldTrail.h"
+#include <fstream>
+#include <sstream>
 
 Controller::Controller()
 {
@@ -12,12 +14,17 @@ Controller::Controller()
 
 void Controller::run()
 {
-	m_clock.restart();
-	m_window.create(sf::VideoMode(800, 600), "SFML works!");
-	m_window.setFramerateLimit(60);
+	std::ifstream file("info.txt");
+	ReadFileInfo(file);
 
-	fillSquares();
+	m_object.push_back(std::make_unique<Player>(sf::Vector2f(0, 0), m_info[2]));
+	m_clock.restart();
+	m_window.create(sf::VideoMode(m_info[0], m_info[1]), "Xonix game!");
+	m_window.setFramerateLimit(60);
+	ReadFileInfo(file);
+
 	fillObject();
+	fillSquares();
 
 	while (m_window.isOpen())
 	{
@@ -66,8 +73,7 @@ void Controller::fillSquares()
 //==================================
 void Controller::fillObject() // פה צריך למלאת את המערך של המלבנים
 {
-	m_object.push_back(std::make_unique<Player>(sf::Vector2f(0,0)));
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < m_info[1]; ++i)
 	{
 			m_object.push_back(std::make_unique<Enemy>(sf::Vector2f((i+1) * 100, (i+1) * 100), sf::Color::Red));
 	}
@@ -126,6 +132,29 @@ void Controller::checkSquaresCollision()
 			{
 				m_object[i]->collision(m_squares[j][k].get());
 			}
+		}
+	}
+}
+//=======================================
+void Controller::ReadFileInfo(std::ifstream& file)
+{
+	if (!file.is_open())
+	{
+		std::cerr << "Error opening file" << std::endl;
+		return;
+	}
+
+	m_info.clear(); // מאפס את הווקטור
+
+	std::string line;
+	if (std::getline(file, line)) // קורא רק שורה אחת
+	{
+		std::istringstream iss(line);
+		int number;
+
+		while (iss >> number)
+		{
+			m_info.push_back(number); // מוסיף מספרים לווקטור
 		}
 	}
 
