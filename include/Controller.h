@@ -23,6 +23,7 @@ private:
 	void checkCollision();
 	void checkSquaresCollision();
 	void ReadFileInfo(std::ifstream& file);
+	void printInfo();
 
 	sf::RenderWindow m_window;
 	std::vector<std::unique_ptr<Object>> m_object;
