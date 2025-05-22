@@ -4,7 +4,7 @@
 #include "Enemy.h"
 
 SquareFieldClosed::SquareFieldClosed(sf::Vector2f position)
-	: SquareField(position, sf::Color::Cyan, SquareType::Closed)
+	: SquareField(position, sf::Color::Cyan)
 {
 }
 //==================================

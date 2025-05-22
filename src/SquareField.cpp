@@ -2,12 +2,19 @@
 #include "SquareField.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "SquareFieldTrail.h"
 
 
 
-SquareField::SquareField(sf::Vector2f position, sf::Color color, SquareType squareType)
-	: Square(position, color), m_Type(squareType)
+SquareField::SquareField(sf::Vector2f position, sf::Color color)
+	: Square(position, color)
 {
+}
+//==================================
+void SquareField::checkSquareFieldToTrail(std::unique_ptr<SquareField>& squareField)
+{
+	squareField  = std::make_unique<SquareFieldTrail>(getGlobalBounds().getPosition());
+
 }
 //==================================
 //void SquareField::collideWith(Player* player)

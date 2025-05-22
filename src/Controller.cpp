@@ -55,6 +55,7 @@ void Controller::run()
 void Controller::fillSquares()  
 {  
 	sf::Vector2f size = sf::Vector2f(m_window.getSize().x / SQUARE_SIZE, m_window.getSize().y / SQUARE_SIZE);
+
 	m_squares.resize(size.x);
 	for (int i = 0; i < m_squares.size();i++)
 		m_squares[i].resize(size.y);

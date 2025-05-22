@@ -50,11 +50,9 @@ void Player::collideWith(SquareFieldClosed* squareFieldClosed)
 //==================================
 void Player::collideWith(SquareFieldOpen* squareFieldOpen)
 {
-	if ((int)(this->getGlobalBounds().getPosition().x / 4) == (int)(squareFieldOpen->getGlobalBounds().getPosition().x / 4)
-		&& (int)(this->getGlobalBounds().getPosition().y / 4) == (int)(squareFieldOpen->getGlobalBounds().getPosition().y / 4))
-		//if(this->getGlobalBounds().getPosition() == (player->getGlobalBounds().getPosition()))
+	if (this->getGlobalBounds().intersects(squareFieldOpen->getGlobalBounds()))
 	{
-		
+		squareFieldOpen->collideWith(this);
 	}
 }
 //==================================

@@ -3,7 +3,7 @@
 #include "Object.h"
 
 SquareFieldTrail::SquareFieldTrail(sf::Vector2f position)
-	: SquareField(position, sf::Color::White, SquareType::Trail)
+	: SquareField(position, sf::Color::White)
 {
 }
 //==================================

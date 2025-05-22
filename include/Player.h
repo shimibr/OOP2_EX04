@@ -20,6 +20,6 @@ public:
 
 
 private:
-	void checkSquareFieldToTrail(std::unique_ptr <SquareField>& squareField);
+	
 	int m_life;
 };
