@@ -18,9 +18,10 @@ void SquareFieldOpen::collision(Object* other)
 //=================================
 void SquareFieldOpen::collideWith(Player* player)
 {
-	if ((int)(this->getGlobalBounds().getPosition().x / 4) == (int)(player->getGlobalBounds().getPosition().x / 4)
-		&& (int)(this->getGlobalBounds().getPosition().y / 4) == (int)(player->getGlobalBounds().getPosition().y / 4))
-		//if(this->getGlobalBounds().getPosition() == (player->getGlobalBounds().getPosition()))
-	{
-	}
+	
+	/*if ((int)(this->getGlobalBounds().getPosition().x / 8) == (int)(player->getGlobalBounds().getPosition().x / 8)
+		&& (int)(this->getGlobalBounds().getPosition().y / 8) == (int)(player->getGlobalBounds().getPosition().y / 8))*/
+	
+	player->collideWith(this);
+	
 }

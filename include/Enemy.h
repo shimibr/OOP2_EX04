@@ -14,7 +14,7 @@ public:
 	void collideWith(class Player* player) override;
 	void collideWith(class Enemy* enemy) override {}
 	
-	void collideWith(SquareFieldTrail* squareFieldTrail) override {}
+	void collideWith(SquareFieldTrail* squareFieldTrail) override;
 	void collideWith(SquareFieldClosed* squareFieldClosed) override;
 	void collideWith(SquareFieldOpen* squareFieldOpen) override {}
 

@@ -10,7 +10,7 @@ public:
 	~SquareFieldClosed() {}
 
 	void collision(Object* other) override;
-	void collideWith(Player* player) override {}
+	void collideWith(Player* player) override;
 	void collideWith(Enemy* enemy) override;
 
 private:

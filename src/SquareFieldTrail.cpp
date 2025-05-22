@@ -1,6 +1,7 @@
 #pragma once
 #include "SquareFieldTrail.h"
 #include "Object.h"
+#include "Player.h"
 
 SquareFieldTrail::SquareFieldTrail(sf::Vector2f position)
 	: SquareField(position, sf::Color::White)
@@ -13,4 +14,9 @@ void SquareFieldTrail::collision(Object* other)
 	{
 		other->collideWith(this);
 	}
+}
+//==================================
+void SquareFieldTrail::collideWith(Player* player)
+{
+		player->collideWith(this);
 }
