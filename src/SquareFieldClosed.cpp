@@ -5,7 +5,7 @@
 #include "Player.h"
 
 SquareFieldClosed::SquareFieldClosed(sf::Vector2f position)
-	: SquareField(position, sf::Color::Cyan)
+	: SquareField(position, sf::Color::Yellow)
 {
 }
 //==================================

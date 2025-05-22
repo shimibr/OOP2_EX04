@@ -21,9 +21,9 @@ public:
 	sf::FloatRect getGlobalBounds() const;
 protected:
 	void setPosition() { m_square.setPosition(m_position);}
-	void  setColor(sf::Color color) { m_square.setFillColor(color); }
 	sf::Vector2f m_position;
 	static bool m_playerDead;
 private:
+	void inWindow(sf::Vector2u sizeWindow);
 	sf::RectangleShape m_square;
 };
