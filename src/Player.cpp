@@ -2,6 +2,10 @@
 #include "Player.h"
 #include <iostream>
 #include "SquareField.h"
+#include "SquareFieldClosed.h"
+#include "SquareFieldOpen.h"
+#include "SquareFieldTrail.h"
+
 
 Player::Player(sf::Vector2f position)
 	: Object(position, sf::Color::Green, 200) {
@@ -15,11 +19,11 @@ void Player::draw(sf::RenderWindow& window)
 	Square::draw(window);
 }
 //==========================================
-void Player::collision(Square* Square)
+void Player::collision(SquareField* squareField)
 {
-	if (this->getGlobalBounds().intersects(Square->getGlobalBounds()))
+	if (this->getGlobalBounds().intersects(squareField->getGlobalBounds()))
 	{
-		Square->collideWith(this);
+		squareField->collideWith(this);
 	}
 }
 //==================================
@@ -39,12 +43,19 @@ void Player::collideWith(Enemy* enemy)
 {
 }
 //==================================
-void Player::collideWith(SquareField* squareField, SquareType squareType)
+void Player::collideWith(SquareFieldClosed* squareFieldClosed)
 {
 	
-	if (squareType == SquareType::Trail && this->getGlobalBounds().intersects(squareField->getGlobalBounds()))
-		m_playerDead = true;
-	
+}
+//==================================
+void Player::collideWith(SquareFieldOpen* squareFieldOpen)
+{
+	if ((int)(this->getGlobalBounds().getPosition().x / 4) == (int)(squareFieldOpen->getGlobalBounds().getPosition().x / 4)
+		&& (int)(this->getGlobalBounds().getPosition().y / 4) == (int)(squareFieldOpen->getGlobalBounds().getPosition().y / 4))
+		//if(this->getGlobalBounds().getPosition() == (player->getGlobalBounds().getPosition()))
+	{
+		
+	}
 }
 //==================================
 void Player::move(float time)

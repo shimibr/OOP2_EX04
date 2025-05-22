@@ -1,5 +1,6 @@
+#pragma once
 #include "Square.h"
-#include <Io.h>
+
 
 bool Square::m_playerDead = false;
 

@@ -9,12 +9,16 @@ public:
 	void move(float time) override;
 	void draw(sf::RenderWindow& window) override;
 
-	void collision(Square* Square) override;
+	void collision(SquareField* squareField) override;
 	void collision(Object* other) override;
 	void collideWith(class Player* player) override;
 	void collideWith(class Enemy* enemy) override;
-	void collideWith(SquareField* squareField, SquareType squareType) override;
+
+	void collideWith(SquareFieldTrail* squareFieldTrail) override {}
+	void collideWith(SquareFieldClosed* squareFieldClosed) override;
+	void collideWith(SquareFieldOpen* squareFieldOpen) override;
 
 
 private:
+	void checkSquareFieldToTrail(std::unique_ptr <SquareField>& squareField);
 };

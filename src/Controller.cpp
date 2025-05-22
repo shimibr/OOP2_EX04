@@ -3,6 +3,8 @@
 #include "Enemy.h"
 #include <iostream>//
 #include "SquareFieldOpen.h"
+#include <SquareFieldClosed.h>
+#include "SquareFieldTrail.h"
 
 Controller::Controller()
 {
@@ -46,17 +48,19 @@ void Controller::run()
 void Controller::fillSquares()  
 {  
 	sf::Vector2f size = sf::Vector2f(m_window.getSize().x / SQUARE_SIZE, m_window.getSize().y / SQUARE_SIZE);
-   for (int i = 0; i < size.x; i++)
-   {  
-	   std::vector<std::unique_ptr <SquareField>> row;
-       for (int j = 0; j < size.y; j++)
+	m_squares.resize(size.x);
+	for (int i = 0; i < m_squares.size();i++)
+		m_squares[i].resize(size.y);
+
+	for (int i = 0; i < size.x; i++)
+   {   
+	   for (int j = 0; j < size.y; j++)
        {  
-		   if(i == 0 || j == 0 || i == size.x - 1 || j ==  size.y - 1)
-			   row.push_back(std::make_unique< SquareField>(sf::Vector2f(i * SQUARE_SIZE, j * SQUARE_SIZE), sf::Color::Cyan , SquareType::Closed));
+		   if (i == 0 || j == 0 || i == size.x - 1 || j == size.y - 1)
+			   m_squares[i][j] = std::make_unique< SquareFieldClosed>(sf::Vector2f(i * SQUARE_SIZE, j * SQUARE_SIZE));
 		   else
-			   row.push_back(std::make_unique<SquareFieldOpen>(sf::Vector2f(i * SQUARE_SIZE, j * SQUARE_SIZE)));
-       }  
-	   m_squares.push_back(std::move(row));
+			   m_squares[i][j] = std::make_unique<SquareFieldOpen>(sf::Vector2f(i * SQUARE_SIZE, j * SQUARE_SIZE));
+	   } 
    }  
 }
 //==================================
@@ -124,4 +128,5 @@ void Controller::checkSquaresCollision()
 			}
 		}
 	}
+
 }

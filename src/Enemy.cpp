@@ -3,7 +3,8 @@
 #include "Enemy.h"
 #include <iostream>
 #include "SquareField.h"
-
+#include "SquareFieldClosed.h"
+#include "Player.h"
 
 Enemy::Enemy(sf::Vector2f position, sf::Color color)
 	: Object(position, color, 100)
@@ -15,11 +16,11 @@ Enemy::Enemy(sf::Vector2f position, sf::Color color)
 	} while (m_directionX == 0 || m_directionY == 0);
 }
 //=========================
-void Enemy::collision(Square* Square)
+void Enemy::collision(SquareField* squareField)
 {
-	if (this->getGlobalBounds().intersects(Square->getGlobalBounds()))
+	if (this->getGlobalBounds().intersects(squareField->getGlobalBounds()))
 	{
-		Square->collideWith(this);
+		squareField->collideWith(this);
 	}
 }
 //=======================================
@@ -33,12 +34,17 @@ void Enemy::collision(Object* other)
 //==================================
 void Enemy::collideWith(Player* player)
 {
-}
-//==================================
-void Enemy::collideWith(SquareField* squareField, SquareType squareType)
-{
-	if (this->getGlobalBounds().intersects(squareField->getGlobalBounds()) && squareType == SquareType::Closed)
+	if (this->getGlobalBounds().intersects(player->getGlobalBounds()))
 	{
-		moveBack();
+		m_playerDead = true;
 	}
 }
+//===================================
+void Enemy::collideWith(SquareFieldClosed* squareFieldClosed)
+{
+	if (this->getGlobalBounds().intersects(squareFieldClosed->getGlobalBounds()))
+		{
+			moveBack();
+		}
+}
+//==================================

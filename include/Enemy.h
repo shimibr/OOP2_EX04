@@ -9,11 +9,14 @@ public:
 	Enemy(sf::Vector2f position, sf::Color color);
 	~Enemy() = default;
 
-	void collision(Square* Square) override;
+	void collision(SquareField* squareField) override;
 	void collision(Object* other) override;
 	void collideWith(class Player* player) override;
 	void collideWith(class Enemy* enemy) override {}
-	void collideWith(SquareField* squareField, SquareType squareType) override;
+	
+	void collideWith(SquareFieldTrail* squareFieldTrail) override {}
+	void collideWith(SquareFieldClosed* squareFieldClosed) override;
+	void collideWith(SquareFieldOpen* squareFieldOpen) override {}
 
 private:
 	

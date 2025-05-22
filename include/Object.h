@@ -1,7 +1,12 @@
 #pragma once
 
-#include "Io.h"
 #include "Square.h"
+//#include "SquareFieldTrail.h"
+//#include "SquareFieldClosed.h"
+//#include "SquareFieldOpen.h"
+class SquareFieldTrail;
+class SquareFieldClosed;
+class SquareFieldOpen;
 
 class Object : public Square
 {
@@ -10,11 +15,16 @@ public:
 	virtual ~Object() {};
 	virtual void move(float time);
 
+	virtual void collision(SquareField* squareField) = 0;
 	virtual void collision(Object* other) = 0;
-	virtual void collision(Square* Square) = 0;
 	virtual void collideWith(class Player* player) = 0;
 	virtual void collideWith(class Enemy* enemy) = 0;
-	virtual void collideWith(SquareField* squareField, SquareType squareType) = 0;
+
+	virtual void collideWith(SquareFieldTrail* squareFieldTrail) = 0;
+	virtual void collideWith(SquareFieldClosed* squareFieldClosed) = 0;
+	virtual void collideWith(SquareFieldOpen* squareFieldOpen) = 0;
+
+
 
 protected:
 	void moveBack();
