@@ -13,7 +13,8 @@ public:
 	void run();
 
 private:
-	bool fillSquaresConquere(int i, int j);
+	void fillSquaresConquere();
+	void recFillSquaresConquere(int i, int j, Object* object);
 	
 	void fillSquares();
 	void fillObject();

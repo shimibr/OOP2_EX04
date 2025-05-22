@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Object.h"
+#include "SquareField.h"
 
 
 class Enemy : public Object
@@ -17,6 +18,8 @@ public:
 	void collideWith(SquareFieldTrail* squareFieldTrail) override;
 	void collideWith(SquareFieldClosed* squareFieldClosed) override;
 	void collideWith(SquareFieldOpen* squareFieldOpen) override {}
+
+	bool isOpen(SquareField* squareField) override { return squareField->isOpen(this); }
 
 private:
 	

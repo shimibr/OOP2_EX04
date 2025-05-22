@@ -29,3 +29,11 @@ void SquareFieldClosed::collideWith(Enemy* enemy)
 		enemy->collideWith(this);
 	}
 }
+//==================================
+bool SquareFieldClosed::isOpen(Player* player)
+{
+	if(m_changeToType == SquareType::Nothing)
+		return false;
+	
+	m_changeToType = SquareType::Nothing;  return true;
+}

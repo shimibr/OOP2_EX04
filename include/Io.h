@@ -5,6 +5,7 @@ enum class SquareType
 	Open,
 	Trail,
 	Nothing,
+	Default,
 };
 
 const int SQUARE_SIZE = 20;

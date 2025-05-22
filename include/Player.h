@@ -22,6 +22,8 @@ public:
 	void collideWith(SquareFieldClosed* squareFieldClosed) override;
 	void collideWith(SquareFieldOpen* squareFieldOpen) override;
 
+	bool isOpen(SquareField* squareField) override { return squareField->isOpen(this); }
+
 
 private:
 	static bool m_conquered;

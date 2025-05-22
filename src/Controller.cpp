@@ -20,6 +20,7 @@ void Controller::run()
 	m_object.push_back(std::make_unique<Player>(sf::Vector2f(0, 0), m_info[2]));
 	m_clock.restart();
 	m_window.create(sf::VideoMode(m_info[0], m_info[1]), "Xonix game!");
+	int sum = m_info[0] * m_info[1];
 	m_window.setFramerateLimit(60);
 	ReadFileInfo(file);
 
@@ -28,6 +29,7 @@ void Controller::run()
 
 	while (m_window.isOpen())
 	{
+
 		//if (Square::playerIsDead())
 			//std::cout << "dead";//
 
@@ -47,7 +49,7 @@ void Controller::run()
 		if (Player::isConquered())
 		{
 			std::cout << "conquered" << std::endl;
-			fillSquaresConquere(m_lastTrail.x, m_lastTrail.y);
+			fillSquaresConquere();
 		}
 
 		m_window.clear();
@@ -57,9 +59,40 @@ void Controller::run()
 	}
 }
 //==================================
-bool Controller::fillSquaresConquere(int i,int j)
+void Controller::fillSquaresConquere()
 {
+	for(int o = 0;o < m_object.size(); o++)
+	{
+		for (int i = 0; i < m_squares.size(); i++)
+		{
+			for (int j = 0; j < m_squares[i].size(); j++)
+			{
+				if (m_squares[i][j]->getGlobalBounds().intersects(m_object[o]->getGlobalBounds()))
+				{
+					recFillSquaresConquere(i, j, m_object[o].get());
+					j = m_squares[i].size();
+					//i = m_squares.size();
+				}
+			}
+		}
+	}
+}
+//==================================
+void Controller::recFillSquaresConquere(int i, int j, Object* object)
+{
+	if (object->isOpen(m_squares[i][j].get()))
+	{
 
+		if(i < m_squares.size()-1)
+			recFillSquaresConquere(i + 1, j, object);
+		if(i > 0)
+			recFillSquaresConquere(i - 1, j, object);
+		if (j < m_squares[i].size() - 1)
+			recFillSquaresConquere(i, j + 1, object);
+		if (j > 0)
+			recFillSquaresConquere(i, j - 1, object);
+		
+	}
 }
 //==================================
 void Controller::fillSquares()  
@@ -98,8 +131,12 @@ void Controller::drawSquares()
 		{
 			if (m_squares[i][j]->isChanged() == SquareType::Trail)
 			{
-				m_lastTrail = sf::Vector2i(i, j);
+				//m_lastTrail = sf::Vector2i(i, j);
 				m_squares[i][j] = std::make_unique<SquareFieldTrail>(sf::Vector2f(i * SQUARE_SIZE, j * SQUARE_SIZE));
+			}
+			if (m_squares[i][j]->isChanged() == SquareType::Closed)
+			{
+				m_squares[i][j] = std::make_unique<SquareFieldClosed>(sf::Vector2f(i * SQUARE_SIZE, j * SQUARE_SIZE));
 			}
 			m_squares[i][j]->draw(m_window);
 		}

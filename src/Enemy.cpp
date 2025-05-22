@@ -48,6 +48,7 @@ void Enemy::collideWith(SquareFieldTrail* squareFieldTrail)
 void Enemy::collideWith(SquareFieldClosed* squareFieldClosed)
 {
 			moveBack();
-		
 }
+//===================================
+
 //==================================

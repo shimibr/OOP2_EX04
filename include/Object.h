@@ -24,7 +24,7 @@ public:
 	virtual void collideWith(SquareFieldClosed* squareFieldClosed) = 0;
 	virtual void collideWith(SquareFieldOpen* squareFieldOpen) = 0;
 
-
+	virtual bool isOpen(SquareField* squareField) = 0;
 
 protected:
 	void moveBack();

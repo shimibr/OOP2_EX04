@@ -12,6 +12,8 @@ public:
 	void collideWith(Player* player) override;
 	void collideWith(Enemy* enemy) override {}
 
+	bool isOpen(Enemy* enemy) override;
+
 private:
 
 };
