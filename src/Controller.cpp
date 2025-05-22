@@ -28,8 +28,8 @@ void Controller::run()
 
 	while (m_window.isOpen())
 	{
-		if (Square::playerIsDead())
-			std::cout << "dead";//
+		//if (Square::playerIsDead())
+			//std::cout << "dead";//
 
 		sf::Event event;
 		while (m_window.pollEvent(event))

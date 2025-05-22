@@ -39,6 +39,11 @@ void Enemy::collideWith(Player* player)
 		m_playerDead = true;
 	}
 }
+//==================================
+void Enemy::collideWith(SquareFieldTrail* squareFieldTrail)
+{
+	m_playerDead = true;
+}
 //===================================
 void Enemy::collideWith(SquareFieldClosed* squareFieldClosed)
 {
