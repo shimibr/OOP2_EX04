@@ -23,9 +23,11 @@ public:
 	void collideWith(SquareFieldOpen* squareFieldOpen) override;
 
 	bool isOpen(SquareField* squareField) override { return squareField->isOpen(this); }
+	void reset() override;
 
 
 private:
+	sf::Vector2f m_firstPosition;
 	static bool m_conquered;
 	bool m_middleOfConquer = false;
 	int m_life;

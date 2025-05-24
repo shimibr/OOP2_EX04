@@ -18,6 +18,7 @@ public:
 
 	virtual bool isOpen(Enemy* enemy){ return false; }
 	virtual bool isOpen(Player* player);
+	virtual void reset() {};
 	
 protected:
 	void checkSquareFieldToTrail(std::unique_ptr <SquareField>& squareField);

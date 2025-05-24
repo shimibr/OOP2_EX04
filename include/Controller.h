@@ -25,12 +25,12 @@ private:
 	void checkSquaresCollision();
 	void ReadFileInfo(std::ifstream& file);
 	void printInfo();
+	void resetDisqualification();
 
 	sf::RenderWindow m_window;
 	std::vector<std::unique_ptr<Object>> m_object;
 	std::vector<std::vector<std::unique_ptr <SquareField>>> m_squares;
 	sf::Clock m_clock;
 	std::vector<int> m_info;
-
-	sf::Vector2i m_lastTrail;
+	int m_sumSquare = 0;
 };

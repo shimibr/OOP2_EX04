@@ -2,8 +2,6 @@
 #include "Square.h"
 
 
-bool Square::m_playerDead = false;
-
 Square::Square(sf::Vector2f position, sf::Color color) 
 	: m_position(position)
 {

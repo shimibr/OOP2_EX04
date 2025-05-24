@@ -20,7 +20,7 @@ void Controller::run()
 	m_object.push_back(std::make_unique<Player>(sf::Vector2f(0, 0), m_info[2]));
 	m_clock.restart();
 	m_window.create(sf::VideoMode(m_info[0], m_info[1]), "Xonix game!");
-	int sum = m_info[0] * m_info[1];
+	m_sumSquare = (m_info[0] / SQUARE_SIZE) * (m_info[1] /SQUARE_SIZE);
 	m_window.setFramerateLimit(60);
 	ReadFileInfo(file);
 
@@ -30,13 +30,12 @@ void Controller::run()
 	while (m_window.isOpen())
 	{
 
-		//if (Square::playerIsDead())
-			//std::cout << "dead";//
+		
 
 		sf::Event event;
 		while (m_window.pollEvent(event))
 		{
-			if (event.type == sf::Event::Closed)
+			if (event.type == sf::Event::Closed || Object::playerIsDead())
 				m_window.close();
 		}
 
@@ -48,14 +47,21 @@ void Controller::run()
 		}
 		if (Player::isConquered())
 		{
-			std::cout << "conquered" << std::endl;
 			fillSquaresConquere();
 		}
+		if (Object::playerIsDead())
+		{
+			resetDisqualification();
+		}
+			
 
 		m_window.clear();
 		drawSquares();
 		drawObject();
 		m_window.display();
+
+		if(SquareFieldClosed::getCount() >= m_sumSquare /100 * m_info[0])
+			std::cout << "You win!" << std::endl;
 	}
 }
 //==================================
@@ -71,7 +77,6 @@ void Controller::fillSquaresConquere()
 				{
 					recFillSquaresConquere(i, j, m_object[o].get());
 					j = m_squares[i].size();
-					//i = m_squares.size();
 				}
 			}
 		}
@@ -119,7 +124,9 @@ void Controller::fillObject() // פה צריך למלאת את המערך של המלבנים
 {
 	for (int i = 0; i < m_info[1]; ++i)
 	{
-			m_object.push_back(std::make_unique<Enemy>(sf::Vector2f((i+1) * 100, (i+1) * 100), sf::Color::Red));
+		int x = (rand() % (m_window.getSize().x - 2 * SQUARE_SIZE)) + SQUARE_SIZE;
+		int y = (rand() % (m_window.getSize().y - 5 * SQUARE_SIZE)) + SQUARE_SIZE;
+			m_object.push_back(std::make_unique<Enemy>(sf::Vector2f(x,y), sf::Color::Red));
 	}
 }
 //==================================
@@ -131,12 +138,15 @@ void Controller::drawSquares()
 		{
 			if (m_squares[i][j]->isChanged() == SquareType::Trail)
 			{
-				//m_lastTrail = sf::Vector2i(i, j);
 				m_squares[i][j] = std::make_unique<SquareFieldTrail>(sf::Vector2f(i * SQUARE_SIZE, j * SQUARE_SIZE));
 			}
 			if (m_squares[i][j]->isChanged() == SquareType::Closed)
 			{
 				m_squares[i][j] = std::make_unique<SquareFieldClosed>(sf::Vector2f(i * SQUARE_SIZE, j * SQUARE_SIZE));
+			}
+			if (m_squares[i][j]->isChanged() == SquareType::Open)
+			{
+				m_squares[i][j] = std::make_unique<SquareFieldOpen>(sf::Vector2f(i * SQUARE_SIZE, j * SQUARE_SIZE));
 			}
 			m_squares[i][j]->draw(m_window);
 		}
@@ -222,10 +232,26 @@ void Controller::printInfo()
 	text.setFont(font);
 	text.setCharacterSize(24);
 	text.setFillColor(sf::Color::White);
-	text.setString("Player life: " + std::to_string(m_info[1]));
+	text.setString("Player life: " + std::to_string(m_info[1])); //מה הקשר הוא מדפס פה את כמות השומרים
 	text.setPosition(m_window.getSize().x - (m_window.getSize().x * 0.75), m_window.getSize().y - 40);
 	m_window.draw(text);
-	text.setString("Player score: " + std::to_string(m_info[0]));
+	text.setString("Player score: " + std::to_string(SquareFieldClosed::getCount() * 100 / m_sumSquare) + " / " + std::to_string(m_info[0]));
 	text.setPosition(m_window.getSize().x - (m_window.getSize().x * 0.50), m_window.getSize().y - 40);
 	m_window.draw(text);
 }
+//=======================================
+void Controller::resetDisqualification()
+{
+	for (int i = 0; i < m_squares.size(); ++i)
+	{
+		for (int j = 0; j < m_squares[i].size(); ++j)
+		{
+			m_squares[i][j]->reset();
+		}
+	}
+	for (int i = 0; i < m_object.size(); ++i)
+	{
+		m_object[i]->reset();
+	}
+}
+//=======================================

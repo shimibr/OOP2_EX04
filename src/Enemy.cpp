@@ -7,7 +7,7 @@
 #include "Player.h"
 
 Enemy::Enemy(sf::Vector2f position, sf::Color color)
-	: Object(position, color, 100)
+	: Object(position, color, 50)
 {
 	do
 	{

@@ -10,7 +10,9 @@ public:
 
 	void collision(Object* other) override;
 	void collideWith(Player* player) override;
-	void collideWith(Enemy* enemy) override {}
+	void collideWith(Enemy* enemy) override;
+
+	void reset() override { m_changeToType = SquareType::Open; }
 
 private:
 

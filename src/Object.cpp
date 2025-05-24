@@ -1,5 +1,7 @@
 #include "Object.h"
 
+bool Object::m_playerDead = false;
+
 Object::Object(sf::Vector2f position, sf::Color color, int speed)
 	: Square(position, color), m_speed(speed)
 {

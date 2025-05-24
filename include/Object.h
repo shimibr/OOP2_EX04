@@ -1,9 +1,6 @@
 #pragma once
 
 #include "Square.h"
-//#include "SquareFieldTrail.h"
-//#include "SquareFieldClosed.h"
-//#include "SquareFieldOpen.h"
 class SquareFieldTrail;
 class SquareFieldClosed;
 class SquareFieldOpen;
@@ -14,6 +11,7 @@ public:
 	Object(sf::Vector2f position,sf::Color color, int speed);
 	virtual ~Object() {};
 	virtual void move(float time);
+	static bool playerIsDead() { return m_playerDead; }
 
 	virtual void collision(SquareField* squareField) = 0;
 	virtual void collision(Object* other) = 0;
@@ -25,11 +23,14 @@ public:
 	virtual void collideWith(SquareFieldOpen* squareFieldOpen) = 0;
 
 	virtual bool isOpen(SquareField* squareField) = 0;
+	virtual void reset() {};
 
 protected:
 	void moveBack();
 	int m_directionX;
 	int m_directionY;
+	static bool m_playerDead;
+	
 private:
 	float m_timeMove;
 	bool m_moveX = true;

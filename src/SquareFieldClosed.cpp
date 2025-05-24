@@ -4,9 +4,12 @@
 #include "Enemy.h"
 #include "Player.h"
 
+int SquareFieldClosed::m_count = 0;
+
 SquareFieldClosed::SquareFieldClosed(sf::Vector2f position)
 	: SquareField(position, sf::Color::Yellow)
 {
+	m_count++;
 }
 //==================================
 void SquareFieldClosed::collision(Object* other)

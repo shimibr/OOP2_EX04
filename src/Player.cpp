@@ -9,7 +9,8 @@
 bool Player::m_conquered = false;
 
 Player::Player(sf::Vector2f position, int life)
-	: Object(position, sf::Color::Green, 20), m_life(life) {
+	: Object(position, sf::Color::Green, 20), m_life(life), m_firstPosition(position)
+{
 
 	m_directionX = 0;
 	m_directionY = 0;
@@ -42,11 +43,12 @@ void Player::collideWith(Player* player)
 //==================================
 void Player::collideWith(Enemy* enemy)
 {
+	m_playerDead = true;
 }
 //==================================
 void Player::collideWith(SquareFieldTrail* squareFieldTrail)
 {
-	m_playerDead = true;
+	//m_playerDead = true;
 }
 //==================================
 void Player::collideWith(SquareFieldClosed* squareFieldClosed)
@@ -64,6 +66,17 @@ void Player::collideWith(SquareFieldClosed* squareFieldClosed)
 void Player::collideWith(SquareFieldOpen* squareFieldOpen)
 {
 	m_middleOfConquer = true;
+}
+//==================================
+void Player::reset()
+{
+	if (m_life > 0)
+	{
+		m_life --;
+		m_position = m_firstPosition;
+		setPosition();
+		m_playerDead = false;
+	}
 }
 //==================================
 bool Player::isConquered()
