@@ -29,12 +29,17 @@ void Controller::run()
 		while (m_window.isOpen())
 		{
 
-
+			if(Object::playerIsDead())
+			{
+				std::cout << "You lose!" << std::endl;
+				m_window.close();
+				return;
+			}
 
 			sf::Event event;
 			while (m_window.pollEvent(event))
 			{
-				if (event.type == sf::Event::Closed || Object::playerIsDead())
+				if (event.type == sf::Event::Closed)
 					m_window.close();
 			}
 
