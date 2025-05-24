@@ -11,13 +11,22 @@ bool Player::m_conquered = false;
 Player::Player(sf::Vector2f position, int life)
 	: Object(position, sf::Color::Green, 20), m_life(life), m_firstPosition(position)
 {
-
+	m_playerDead = false;
 	m_directionX = 0;
 	m_directionY = 0;
 }
 //==================================
 void Player::draw(sf::RenderWindow& window)
 {
+	sf::Font font;
+	font.loadFromFile("C:/Windows/Fonts/arial.ttf");
+	sf::Text text;
+	text.setFont(font);
+	text.setCharacterSize(24);
+	text.setFillColor(sf::Color::White);
+	text.setString("Player life: " + std::to_string(m_life));
+	text.setPosition((window.getSize().x / 5 * 2), window.getSize().y - 40);
+	window.draw(text);
 	Square::draw(window);
 }
 //==========================================

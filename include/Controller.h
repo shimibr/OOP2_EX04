@@ -23,9 +23,10 @@ private:
 	void moveObject(float time);
 	void checkCollision();
 	void checkSquaresCollision();
-	void ReadFileInfo(std::ifstream& file);
+	bool ReadFileInfo(std::ifstream& file);
 	void printInfo();
 	void resetDisqualification();
+	void deleteGame();
 
 	sf::RenderWindow m_window;
 	std::vector<std::unique_ptr<Object>> m_object;
@@ -33,4 +34,5 @@ private:
 	sf::Clock m_clock;
 	std::vector<int> m_info;
 	int m_sumSquare = 0;
+	int m_stage = 1;
 };

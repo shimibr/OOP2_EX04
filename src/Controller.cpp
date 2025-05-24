@@ -15,53 +15,58 @@ Controller::Controller()
 void Controller::run()
 {
 	std::ifstream file("info.txt");
-	ReadFileInfo(file);
-
-	m_object.push_back(std::make_unique<Player>(sf::Vector2f(0, 0), m_info[2]));
-	m_clock.restart();
-	m_window.create(sf::VideoMode(m_info[0], m_info[1]), "Xonix game!");
-	m_sumSquare = (m_info[0] / SQUARE_SIZE) * (m_info[1] /SQUARE_SIZE);
-	m_window.setFramerateLimit(60);
-	ReadFileInfo(file);
-
-	fillObject();
-	fillSquares();
-
-	while (m_window.isOpen())
+	
+	while(!Object::playerIsDead() && ReadFileInfo(file) && m_info.size() == 5)
 	{
+		m_clock.restart();
+		m_window.create(sf::VideoMode(m_info[0], m_info[1]), "Xonix game!");
+		m_sumSquare = (m_info[0] / SQUARE_SIZE) * (m_info[1] / SQUARE_SIZE);
+		m_window.setFramerateLimit(60);
 
-		
+		fillObject();
+		fillSquares();
 
-		sf::Event event;
-		while (m_window.pollEvent(event))
+		while (m_window.isOpen())
 		{
-			if (event.type == sf::Event::Closed || Object::playerIsDead())
+
+
+
+			sf::Event event;
+			while (m_window.pollEvent(event))
+			{
+				if (event.type == sf::Event::Closed || Object::playerIsDead())
+					m_window.close();
+			}
+
+			float time = m_clock.restart().asSeconds();
+			for (int i = 0; i < 2; i++)
+			{
+				moveObject(time);
+				checkCollision();
+			}
+			if (Player::isConquered())
+			{
+				fillSquaresConquere();
+			}
+			if (Object::playerIsDead())
+			{
+				resetDisqualification();
+			}
+
+
+			m_window.clear();
+			drawSquares();
+			drawObject();
+			m_window.display();
+
+			if (SquareFieldClosed::getCount() >= m_sumSquare / 100 * m_info[3])
+			{
+				std::cout << "You win!" << std::endl;
 				m_window.close();
+				m_stage++;
+			}
 		}
-
-		float time = m_clock.restart().asSeconds();
-		for (int i = 0; i < 2; i++)
-		{
-			moveObject(time);
-			checkCollision();
-		}
-		if (Player::isConquered())
-		{
-			fillSquaresConquere();
-		}
-		if (Object::playerIsDead())
-		{
-			resetDisqualification();
-		}
-			
-
-		m_window.clear();
-		drawSquares();
-		drawObject();
-		m_window.display();
-
-		if(SquareFieldClosed::getCount() >= m_sumSquare /100 * m_info[0])
-			std::cout << "You win!" << std::endl;
+		deleteGame();
 	}
 }
 //==================================
@@ -122,10 +127,11 @@ void Controller::fillSquares()
 //==================================
 void Controller::fillObject() // פה צריך למלאת את המערך של המלבנים
 {
-	for (int i = 0; i < m_info[1]; ++i)
+	m_object.push_back(std::make_unique<Player>(sf::Vector2f(0, 0), m_info[2]));
+	for (int i = 0; i < m_info[4]; ++i)
 	{
-		int x = (rand() % (m_window.getSize().x - 2 * SQUARE_SIZE)) + SQUARE_SIZE;
-		int y = (rand() % (m_window.getSize().y - 5 * SQUARE_SIZE)) + SQUARE_SIZE;
+		int x = (rand() % (m_info[0] - 3 * SQUARE_SIZE)) + SQUARE_SIZE;
+		int y = (rand() % (m_info[1] - 3 * SQUARE_SIZE)) + SQUARE_SIZE;
 			m_object.push_back(std::make_unique<Enemy>(sf::Vector2f(x,y), sf::Color::Red));
 	}
 }
@@ -200,28 +206,35 @@ void Controller::checkSquaresCollision()
 	}
 }
 //=======================================
-void Controller::ReadFileInfo(std::ifstream& file)
+bool Controller::ReadFileInfo(std::ifstream& file)
 {
 	if (!file.is_open())
 	{
 		std::cerr << "Error opening file" << std::endl;
-		return;
+		return false;
 	}
 
 	m_info.clear(); // מאפס את הווקטור
 
 	std::string line;
-	if (std::getline(file, line)) // קורא רק שורה אחת
+	for(int i = 0; i < 2; i++)
 	{
-		std::istringstream iss(line);
-		int number;
-
-		while (iss >> number)
+		if (std::getline(file, line)) // קורא רק שורה אחת
 		{
-			m_info.push_back(number); // מוסיף מספרים לווקטור
+			std::istringstream iss(line);
+			int number;
+
+			while (iss >> number)
+			{
+				m_info.push_back(number); // מוסיף מספרים לווקטור
+			}
+		}
+		else
+		{
+			return false; // אם לא הצליח לקרוא שורה, מחזיר false
 		}
 	}
-
+	return true; // אם הצליח לקרוא את כל השורות, מחזיר true
 }
 //=======================================
 void Controller::printInfo()
@@ -232,11 +245,11 @@ void Controller::printInfo()
 	text.setFont(font);
 	text.setCharacterSize(24);
 	text.setFillColor(sf::Color::White);
-	text.setString("Player life: " + std::to_string(m_info[1])); //מה הקשר הוא מדפס פה את כמות השומרים
-	text.setPosition(m_window.getSize().x - (m_window.getSize().x * 0.75), m_window.getSize().y - 40);
+	text.setString("Stage: " + std::to_string(m_stage));
+	text.setPosition((m_window.getSize().x /5), m_window.getSize().y - 40);
 	m_window.draw(text);
-	text.setString("Player score: " + std::to_string(SquareFieldClosed::getCount() * 100 / m_sumSquare) + " / " + std::to_string(m_info[0]));
-	text.setPosition(m_window.getSize().x - (m_window.getSize().x * 0.50), m_window.getSize().y - 40);
+	text.setString("Player score: " + std::to_string(SquareFieldClosed::getCount() * 100 / m_sumSquare) + " / " + std::to_string(m_info[3]));
+	text.setPosition((m_window.getSize().x /5 * 3 ), m_window.getSize().y - 40);
 	m_window.draw(text);
 }
 //=======================================
@@ -253,5 +266,16 @@ void Controller::resetDisqualification()
 	{
 		m_object[i]->reset();
 	}
+}
+//=======================================
+void Controller::deleteGame()
+{
+	for (int i = 0; i < m_squares.size(); ++i)
+	{
+		m_squares[i].clear();
+	}
+	m_squares.clear();
+	m_object.clear();
+	m_info.clear();
 }
 //=======================================
