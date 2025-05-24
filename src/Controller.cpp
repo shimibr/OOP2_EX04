@@ -40,7 +40,10 @@ void Controller::run()
 			while (m_window.pollEvent(event))
 			{
 				if (event.type == sf::Event::Closed)
+				{
 					m_window.close();
+					return;
+				}
 			}
 
 			float time = m_clock.restart().asSeconds();
@@ -251,10 +254,10 @@ void Controller::printInfo()
 	text.setCharacterSize(24);
 	text.setFillColor(sf::Color::White);
 	text.setString("Stage: " + std::to_string(m_stage));
-	text.setPosition((m_window.getSize().x /5), m_window.getSize().y - 40);
+	text.setPosition(SQUARE_SIZE, m_window.getSize().y - 40);
 	m_window.draw(text);
 	text.setString("Player score: " + std::to_string(SquareFieldClosed::getCount() * 100 / m_sumSquare) + " / " + std::to_string(m_info[3]));
-	text.setPosition((m_window.getSize().x /5 * 3 ), m_window.getSize().y - 40);
+	text.setPosition((m_window.getSize().x /5 * 3), m_window.getSize().y - 40);
 	m_window.draw(text);
 }
 //=======================================

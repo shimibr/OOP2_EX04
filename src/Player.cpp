@@ -25,7 +25,7 @@ void Player::draw(sf::RenderWindow& window)
 	text.setCharacterSize(24);
 	text.setFillColor(sf::Color::White);
 	text.setString("Player life: " + std::to_string(m_life));
-	text.setPosition((window.getSize().x / 5 * 2), window.getSize().y - 40);
+	text.setPosition((window.getSize().x / 5 ), window.getSize().y - 40);
 	window.draw(text);
 	Square::draw(window);
 }
