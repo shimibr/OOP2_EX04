@@ -22,6 +22,7 @@ void SquareFieldOpen::collideWith(Player* player)
 	player->collideWith(this);
 	
 }
+//==================================
 bool SquareFieldOpen::isOpen(Enemy* enemy)
 {
 	if(m_changeToType == SquareType::Nothing)

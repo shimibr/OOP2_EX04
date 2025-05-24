@@ -57,7 +57,8 @@ void Player::collideWith(Enemy* enemy)
 //==================================
 void Player::collideWith(SquareFieldTrail* squareFieldTrail)
 {
-	//m_playerDead = true;
+	if(squareFieldTrail->getGlobalBounds().getPosition() != m_lastTrail)
+		m_playerDead = true;
 }
 //==================================
 void Player::collideWith(SquareFieldClosed* squareFieldClosed)
@@ -74,6 +75,7 @@ void Player::collideWith(SquareFieldClosed* squareFieldClosed)
 //==================================
 void Player::collideWith(SquareFieldOpen* squareFieldOpen)
 {
+	m_lastTrail = m_position;
 	m_middleOfConquer = true;
 }
 //==================================

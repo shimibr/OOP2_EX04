@@ -28,6 +28,7 @@ public:
 
 private:
 	sf::Vector2f m_firstPosition;
+	sf::Vector2f m_lastTrail;
 	static bool m_conquered;
 	bool m_middleOfConquer = false;
 	int m_life;
