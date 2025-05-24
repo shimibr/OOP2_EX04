@@ -1,7 +1,7 @@
 #pragma once
 #include "Controller.h"
 #include "Enemy.h"
-#include <iostream>//
+#include <iostream>
 #include "SquareFieldOpen.h"
 #include <SquareFieldClosed.h>
 #include "SquareFieldTrail.h"
@@ -16,7 +16,7 @@ void Controller::run()
 {
 	std::ifstream file("info.txt");
 	
-	while(!Object::playerIsDead() && ReadFileInfo(file) && m_info.size() == 5)
+	while(!Object::playerIsDead() && ReadFileInfo(file))
 	{
 		m_clock.restart();
 		m_window.create(sf::VideoMode(m_info[0], m_info[1]), "Xonix game!");
@@ -218,7 +218,7 @@ bool Controller::ReadFileInfo(std::ifstream& file)
 {
 	if (!file.is_open())
 	{
-		std::cerr << "Error opening file" << std::endl;
+		throw std::runtime_error("Could not open file info.txt");
 		return false;
 	}
 
@@ -230,17 +230,30 @@ bool Controller::ReadFileInfo(std::ifstream& file)
 		if (std::getline(file, line)) // קורא רק שורה אחת
 		{
 			std::istringstream iss(line);
+			iss.exceptions(std::ios::failbit | std::ios::badbit);
 			int number;
 
-			while (iss >> number)
+			while (!iss.eof() && iss >> number)
 			{
+				if (number < 0)
+				{
+					throw std::runtime_error("Negative number found in info.txt");
+				}
 				m_info.push_back(number); // מוסיף מספרים לווקטור
+
+				if(!iss.eof())
+					iss >> std::ws;
 			}
+			
 		}
 		else
 		{
 			return false; // אם לא הצליח לקרוא שורה, מחזיר false
 		}
+	}
+	if (m_info.size() != 5)
+	{
+		throw std::runtime_error("Incorrect number of values in info.txt, expected 5 values");
 	}
 	return true; // אם הצליח לקרוא את כל השורות, מחזיר true
 }
