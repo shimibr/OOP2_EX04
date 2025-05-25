@@ -21,8 +21,7 @@ public:
 	virtual void reset() { m_changeToType = SquareType::Default; }
 	
 protected:
-	void checkSquareFieldToTrail(std::unique_ptr <SquareField>& squareField);
-
+	
 	SquareType m_changeToType = SquareType::Default;
 private:
 

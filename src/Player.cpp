@@ -9,7 +9,7 @@
 bool Player::m_conquered = false;
 
 Player::Player(sf::Vector2f position, int life)
-	: Object(position, sf::Color::Green, 20), m_life(life), m_firstPosition(position)
+	: Object(position, sf::Color::Green, SQUARE_SIZE), m_life(life), m_firstPosition(position)
 {
 	m_playerDead = false;
 	m_directionX = 0;
@@ -44,15 +44,6 @@ void Player::collision(Object* other)
 	{
 		other->collideWith(this);
 	}
-}
-//==================================
-void Player::collideWith(Player* player)
-{
-}
-//==================================
-void Player::collideWith(Enemy* enemy)
-{
-	m_playerDead = true;
 }
 //==================================
 void Player::collideWith(SquareFieldTrail* squareFieldTrail)
