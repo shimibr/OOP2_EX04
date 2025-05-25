@@ -19,16 +19,12 @@ Enemy::Enemy(sf::Vector2f position)
 void Enemy::collision(SquareField* squareField)
 {
 	if (this->getGlobalBounds().intersects(squareField->getGlobalBounds()))
-	{
 		squareField->collideWith(this);
-	}
 }
 //=======================================
 void Enemy::collision(Object* other)
 {
 	if (this->getGlobalBounds().intersects(other->getGlobalBounds()))
-	{
 		other->collideWith(this);
-	}
 }
 //===================================

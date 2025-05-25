@@ -5,16 +5,12 @@
 #include "Enemy.h"
 
 SquareFieldTrail::SquareFieldTrail(sf::Vector2f position)
-	: SquareField(position, sf::Color::White)
-{
-}
+	: SquareField(position, sf::Color::White) { }
 //==================================
 void SquareFieldTrail::collision(Object* other)
 {
 	if (this->getGlobalBounds().intersects(other->getGlobalBounds()))
-	{
 		other->collideWith(this);
-	}
 }
 //==================================
 void SquareFieldTrail::collideWith(Player* player)

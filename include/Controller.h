@@ -27,6 +27,10 @@ private:
 	void printInfo();
 	void resetDisqualification();
 	void deleteGame();
+	void playerWon();
+	void playerDead();
+	void checkPlayersStatus();
+	void runLevel();
 
 	sf::RenderWindow m_window;
 	std::vector<std::unique_ptr<Object>> m_object;

@@ -7,9 +7,7 @@
 
 
 SquareField::SquareField(sf::Vector2f position, sf::Color color)
-	: Square(position, color)
-{
-}
+	: Square(position, color) { }
 //==================================
 bool SquareField::isOpen(Player* player)
 {

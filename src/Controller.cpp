@@ -12,7 +12,7 @@
 Controller::Controller()
 {
 }
-
+//========================================
 void Controller::run()
 {
 	std::ifstream file("info.txt");
@@ -23,76 +23,14 @@ void Controller::run()
 		m_sumSquare = (m_info[0] / SQUARE_SIZE) * (m_info[1] / SQUARE_SIZE);
 		m_window.setFramerateLimit(60);
 
-		m_clock.restart();
 		fillSquares();
 		fillObject();
 
+		m_clock.restart();
 		while (m_window.isOpen())
-		{
+			runLevel();
 
-			if(Object::playerIsDead())
-			{
-				PrintText::getInstance().drawText(m_window, "Game over!", 50, sf::Color::Red, sf::Vector2f(0, 0), 2);
-				PrintText::getInstance().drawText(m_window, "Press enter to exit ... ", 30, sf::Color::White, sf::Vector2f(m_window.getSize().x / 2, m_window.getSize().y / 2), 0);
-				
-				sf::Event event;
-				while (m_window.waitEvent(event))
-				{
-					if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter)
-						m_window.close();
-				}
-				return;
-			}
-
-			sf::Event event;
-			while (m_window.pollEvent(event))
-			{
-				if (event.type == sf::Event::Closed)
-				{
-					m_window.close();
-					return;
-				}
-			}
-
-			float time = m_clock.restart().asSeconds();
-			if (time > 0.2f) // מגביל את הזמן למקסימום של 0.2 שניות - עמ להתמודד עם מחשבים איטיים
-				time = 0.2f;
-			for (int i = 0; i < 2; i++)
-			{
-				moveObject(time);
-				checkCollision();
-			}
-			if (Player::isConquered())
-			{
-				fillSquaresConquere();
-			}
-			if (Object::playerIsDead())
-			{
-				PrintText::getInstance().drawText(m_window, "You are disqualified! Be careful!", 50, sf::Color::Red, sf::Vector2f(0, 0), 1);
-				resetDisqualification();
-			}
-
-
-			m_window.clear();
-			drawSquares();
-			drawObject();
-			m_window.display();
-
-			if (SquareFieldClosed::getCount() >= m_sumSquare / 100 * m_info[3])
-			{
-				PrintText::getInstance().drawText(m_window, "Good job! You won!", 50, sf::Color::Green, sf::Vector2f(0,0), 2);
-				PrintText::getInstance().drawText(m_window, "Press enter to continu ... ", 30, sf::Color::White, sf::Vector2f(m_window.getSize().x / 2, m_window.getSize().y /2), 0);
-				m_stage++;
-
-				sf::Event event;
-				while (m_window.waitEvent(event))
-				{
-					if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) 
-						m_window.close();
-				}
-			}
-		}
-		deleteGame();
+	deleteGame();
 	}
 }
 //==================================
@@ -118,7 +56,6 @@ void Controller::recFillSquaresConquere(int i, int j, Object* object)
 {
 	if (object->isOpen(m_squares[i][j].get()))
 	{
-
 		if(i < m_squares.size()-1)
 			recFillSquaresConquere(i + 1, j, object);
 		if(i > 0)
@@ -127,7 +64,6 @@ void Controller::recFillSquaresConquere(int i, int j, Object* object)
 			recFillSquaresConquere(i, j + 1, object);
 		if (j > 0)
 			recFillSquaresConquere(i, j - 1, object);
-		
 	}
 }
 //==================================
@@ -151,7 +87,7 @@ void Controller::fillSquares()
    }  
 }
 //==================================
-void Controller::fillObject() // פה צריך למלאת את המערך של המלבנים
+void Controller::fillObject()
 {
 	m_object.push_back(std::make_unique<Player>(sf::Vector2f(0, 0), m_info[2]));
 	for (int i = 0; i < m_info[4]; ++i)
@@ -183,24 +119,20 @@ void Controller::drawSquares()
 			m_squares[i][j]->draw(m_window);
 		}
 	}
-
 }
 //==================================
 void Controller::drawObject()
 {
 	for (const auto& object : m_object)
-	{
 		object->draw(m_window);
-	}
+
 	printInfo();
 }
 //==================================
 void Controller::moveObject(float time)
 {
 	for (int i = 0; i < m_object.size(); ++i)
-	{
 		m_object[i]->move(time);
-	}
 }
 //==================================
 void Controller::checkCollision()
@@ -214,8 +146,6 @@ void Controller::checkCollision()
 				m_object[j]->collision(m_object[i].get());
 		}
 	}
-
-
 }
 //=======================================
 void Controller::checkSquaresCollision()
@@ -225,9 +155,7 @@ void Controller::checkSquaresCollision()
 		for (int j = 0; j < m_squares.size(); ++j)
 		{
 			for (int k = 0; k < m_squares[j].size(); ++k)
-			{
 				m_object[i]->collision(m_squares[j][k].get());
-			}
 		}
 	}
 }
@@ -243,36 +171,29 @@ bool Controller::ReadFileInfo(std::ifstream& file)
 	m_info.clear(); // מאפס את הווקטור
 
 	std::string line;
-	for(int i = 0; i < 2; i++)
+	if (std::getline(file, line)) // קורא רק שורה אחת
 	{
-		if (std::getline(file, line)) // קורא רק שורה אחת
-		{
-			std::istringstream iss(line);
-			iss.exceptions(std::ios::failbit | std::ios::badbit);
-			int number;
+		std::istringstream iss(line);
+		iss.exceptions(std::ios::failbit | std::ios::badbit);
+		int number;
 
-			while (!iss.eof() && iss >> number)
-			{
-				if (number < 0)
-				{
-					throw std::runtime_error("Negative number found in info.txt");
-				}
-				m_info.push_back(number); // מוסיף מספרים לווקטור
-
-				if(!iss.eof())
-					iss >> std::ws;
-			}
-			
-		}
-		else
+		while (!iss.eof() && iss >> number)
 		{
-			return false; // אם לא הצליח לקרוא שורה, מחזיר false
+			if (number < 0)
+				throw std::runtime_error("Negative number found in info.txt");
+
+			m_info.push_back(number); // מוסיף מספרים לווקטור
+
+			if(!iss.eof())
+				iss >> std::ws;
 		}
 	}
+	else
+		return false; // אם לא הצליח לקרוא שורה, מחזיר false
+
 	if (m_info.size() != 5)
-	{
 		throw std::runtime_error("Incorrect number of values in info.txt, expected 5 values");
-	}
+
 	return true; // אם הצליח לקרוא את כל השורות, מחזיר true
 }
 //=======================================
@@ -287,24 +208,96 @@ void Controller::resetDisqualification()
 	for (int i = 0; i < m_squares.size(); ++i)
 	{
 		for (int j = 0; j < m_squares[i].size(); ++j)
-		{
 			m_squares[i][j]->reset();
-		}
 	}
+
 	for (int i = 0; i < m_object.size(); ++i)
-	{
 		m_object[i]->reset();
-	}
 }
 //=======================================
 void Controller::deleteGame()
 {
 	for (int i = 0; i < m_squares.size(); ++i)
-	{
 		m_squares[i].clear();
-	}
+
 	m_squares.clear();
 	m_object.clear();
 	m_info.clear();
+}
+//=======================================
+void Controller::playerWon()
+{
+	PrintText::getInstance().drawText(m_window, "Good job! You won!", 50, sf::Color::Green, sf::Vector2f(0, 0), 2);
+	PrintText::getInstance().drawText(m_window, "Press enter to continu ... ", 30, sf::Color::White, sf::Vector2f(m_window.getSize().x / 2, m_window.getSize().y / 2), 0);
+	m_stage++;
+
+	sf::Event event;
+	while (m_window.waitEvent(event))
+	{
+		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter)
+			m_window.close();
+	}
+}
+void Controller::playerDead()
+{
+	if (Object::playerIsDead())
+	{
+		PrintText::getInstance().drawText(m_window, "Game over!", 50, sf::Color::Red, sf::Vector2f(0, 0), 2);
+		PrintText::getInstance().drawText(m_window, "Press enter to exit ... ", 30, sf::Color::White, sf::Vector2f(m_window.getSize().x / 2, m_window.getSize().y / 2), 0);
+
+		sf::Event event;
+		while (m_window.waitEvent(event))
+		{
+			if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter)
+				m_window.close();
+		}
+		return;
+	}
+}
+//======================================
+void Controller::checkPlayersStatus()
+{
+	if (Player::isConquered())
+		fillSquaresConquere();
+
+	if (Object::playerIsDead())
+	{
+		PrintText::getInstance().drawText(m_window, "You are disqualified! Be careful!", 50, sf::Color::Red, sf::Vector2f(0, 0), 1);
+		resetDisqualification();
+	}
+
+	if (SquareFieldClosed::getCount() >= m_sumSquare / 100 * m_info[3])
+		playerWon();
+}
+//======================================
+void Controller::runLevel()
+{
+	playerDead();
+
+	sf::Event event;
+	while (m_window.pollEvent(event))
+	{
+		if (event.type == sf::Event::Closed)
+		{
+			m_window.close();
+			return;
+		}
+	}
+
+	float time = m_clock.restart().asSeconds();
+	if (time > 0.2f) time = 0.2f; // מגביל את הזמן למקסימום של 0.2 שניות - עמ להתמודד עם מחשבים איטיים
+
+	for (int i = 0; i < 2; i++)
+	{
+		moveObject(time);
+		checkCollision();
+	}
+
+	checkPlayersStatus();
+
+	m_window.clear();
+	drawSquares();
+	drawObject();
+	m_window.display();
 }
 //=======================================

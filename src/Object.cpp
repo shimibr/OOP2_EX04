@@ -3,9 +3,7 @@
 bool Object::m_playerDead = false;
 
 Object::Object(sf::Vector2f position, sf::Color color)
-	: Square(position, color)
-{
-}
+	: Square(position, color) { }
 //==================================
 void Object::move(float time)
 {

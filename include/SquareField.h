@@ -21,8 +21,8 @@ public:
 	virtual void reset() { m_changeToType = SquareType::Default; }
 	
 protected:
-	
 	SquareType m_changeToType = SquareType::Default;
+
 private:
 
 };

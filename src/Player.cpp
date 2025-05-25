@@ -7,7 +7,6 @@
 #include "SquareFieldTrail.h"
 #include "PrintText.h"
 
-
 bool Player::m_conquered = false;
 
 Player::Player(sf::Vector2f position, int life)
@@ -27,17 +26,13 @@ void Player::draw(sf::RenderWindow& window)
 void Player::collision(SquareField* squareField)
 {
 	if (this->getGlobalBounds().intersects(squareField->getGlobalBounds()))
-	{
 		squareField->collideWith(this);
-	}
 }
 //==================================
 void Player::collision(Object* other)
 {
 	if (this->getGlobalBounds().intersects(other->getGlobalBounds()))
-	{
 		other->collideWith(this);
-	}
 }
 //==================================
 void Player::collideWith(SquareFieldTrail* squareFieldTrail)
@@ -50,12 +45,12 @@ void Player::collideWith(SquareFieldClosed* squareFieldClosed)
 {
 	m_directionX = 0;
 	m_directionY = 0;
+
 	if(m_middleOfConquer)
 	{
 		m_conquered = true;
 		m_middleOfConquer = false;
 	}
-	
 }
 //==================================
 void Player::collideWith(SquareFieldOpen* squareFieldOpen)
@@ -88,7 +83,6 @@ bool Player::isConquered()
 //==================================
 void Player::move(float time)
 {
-	
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{	
 		m_directionX = -1;
@@ -110,6 +104,7 @@ void Player::move(float time)
 		m_directionX = 0;
 		m_directionY = 1;
 	}
+
 	static float timeMove = 0;
 	timeMove += time;
 	if (timeMove > 0.1)

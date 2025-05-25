@@ -24,7 +24,7 @@ void PrintText::drawText(sf::RenderWindow& window, const std::string& str, unsig
     text.setFillColor(color);
 
     if (position.x == 0)
-	text.setPosition(window.getSize().x / 2 + position.x, window.getSize().y / 2 + position.y);
+	    text.setPosition(window.getSize().x / 2 + position.x, window.getSize().y / 2 + position.y);
 	else
 		text.setPosition(position);
 

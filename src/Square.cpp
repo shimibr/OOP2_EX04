@@ -14,7 +14,6 @@ void Square::draw(sf::RenderWindow& window)
 {
 	inWindow(window.getSize());
 	window.draw(m_square);
-
 }
 //==================================
 sf::FloatRect Square::getGlobalBounds() const

@@ -25,7 +25,6 @@ public:
 
 	bool isOpen(SquareField* squareField) override { return squareField->isOpen(this); }
 
-
 private:
 	sf::Vector2f m_firstPosition;
 	sf::Vector2f m_lastTrail;
