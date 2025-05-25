@@ -5,6 +5,7 @@
 #include "SquareFieldOpen.h"
 #include <SquareFieldClosed.h>
 #include "SquareFieldTrail.h"
+#include "PrintText.h"
 #include <fstream>
 #include <sstream>
 
@@ -31,7 +32,9 @@ void Controller::run()
 
 			if(Object::playerIsDead())
 			{
-				std::cout << "You lose!" << std::endl;
+				PrintText::getInstance().drawText(m_window, "Game over!", 50, sf::Color::Red, sf::Vector2f(0, 0));
+				m_window.display();
+				sf::sleep(sf::seconds(2)); // מחכה 2 שניות לפני סגירת החלון
 				m_window.close();
 				return;
 			}
@@ -60,6 +63,9 @@ void Controller::run()
 			}
 			if (Object::playerIsDead())
 			{
+				PrintText::getInstance().drawText(m_window, "You are disqualified! Be careful!", 50, sf::Color::Red, sf::Vector2f(0, 0));
+				m_window.display();
+				sf::sleep(sf::seconds(1)); // מחכה 1 שניות לפני סגירת החלון
 				resetDisqualification();
 			}
 
@@ -71,7 +77,9 @@ void Controller::run()
 
 			if (SquareFieldClosed::getCount() >= m_sumSquare / 100 * m_info[3])
 			{
-				std::cout << "You win!" << std::endl;
+				PrintText::getInstance().drawText(m_window, "Good job! You won!", 50, sf::Color::Green, sf::Vector2f(0,0));
+				m_window.display();
+				sf::sleep(sf::seconds(2)); // מחכה 2 שניות לפני סגירת החלון
 				m_window.close();
 				m_stage++;
 			}
@@ -262,18 +270,8 @@ bool Controller::ReadFileInfo(std::ifstream& file)
 //=======================================
 void Controller::printInfo()
 {
-	sf::Font font;
-	font.loadFromFile("C:/Windows/Fonts/arial.ttf");
-	sf::Text text;
-	text.setFont(font);
-	text.setCharacterSize(24);
-	text.setFillColor(sf::Color::White);
-	text.setString("Stage: " + std::to_string(m_stage));
-	text.setPosition(SQUARE_SIZE, m_window.getSize().y - 40);
-	m_window.draw(text);
-	text.setString("Player score: " + std::to_string(SquareFieldClosed::getCount() * 100 / m_sumSquare) + " / " + std::to_string(m_info[3]));
-	text.setPosition((m_window.getSize().x /5 * 3), m_window.getSize().y - 40);
-	m_window.draw(text);
+	PrintText::getInstance().drawText(m_window, "Stage: " + std::to_string(m_stage), 24, sf::Color::White, sf::Vector2f(m_window.getSize().x * 0.15, m_window.getSize().y - SQUARE_SIZE));
+	PrintText::getInstance().drawText(m_window, "Player score: " + std::to_string(SquareFieldClosed::getCount() * 100 / m_sumSquare) + " / " + std::to_string(m_info[3]), 24, sf::Color::White, sf::Vector2f((m_window.getSize().x * 0.75), m_window.getSize().y - SQUARE_SIZE));
 }
 //=======================================
 void Controller::resetDisqualification()

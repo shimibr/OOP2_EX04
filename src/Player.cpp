@@ -5,6 +5,8 @@
 #include "SquareFieldClosed.h"
 #include "SquareFieldOpen.h"
 #include "SquareFieldTrail.h"
+#include "PrintText.h"
+
 
 bool Player::m_conquered = false;
 
@@ -18,15 +20,7 @@ Player::Player(sf::Vector2f position, int life)
 //==================================
 void Player::draw(sf::RenderWindow& window)
 {
-	sf::Font font;
-	font.loadFromFile("C:/Windows/Fonts/arial.ttf");
-	sf::Text text;
-	text.setFont(font);
-	text.setCharacterSize(24);
-	text.setFillColor(sf::Color::White);
-	text.setString("Player life: " + std::to_string(m_life));
-	text.setPosition((window.getSize().x / 5 ), window.getSize().y - 40);
-	window.draw(text);
+	PrintText::getInstance().drawText(window, "Player life: " + std::to_string(m_life), 24, sf::Color::White, sf::Vector2f((window.getSize().x * 0.40), window.getSize().y - SQUARE_SIZE));
 	Square::draw(window);
 }
 //==========================================
