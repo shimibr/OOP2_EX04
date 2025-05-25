@@ -158,7 +158,7 @@ void Controller::fillObject() // פה צריך למלאת את המערך של המלבנים
 	{
 		int x = (rand() % (m_info[0] - 3 * SQUARE_SIZE)) +  SQUARE_SIZE;
 		int y = (rand() % (m_info[1] - 5 * SQUARE_SIZE)) + SQUARE_SIZE;
-			m_object.push_back(std::make_unique<Enemy>(sf::Vector2f(x,y), sf::Color::Red));
+			m_object.push_back(std::make_unique<Enemy>(sf::Vector2f(x,y)));
 	}
 }
 //==================================

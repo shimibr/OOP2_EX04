@@ -7,8 +7,10 @@
 class Enemy : public Object
 {
 public:
-	Enemy(sf::Vector2f position, sf::Color color);
+	Enemy(sf::Vector2f position);
 	~Enemy() = default;
+
+	void move(float time) override { Object::move(time * m_speed); }
 
 	void collision(SquareField* squareField) override;
 	void collision(Object* other) override;
@@ -22,5 +24,5 @@ public:
 	bool isOpen(SquareField* squareField) override { return squareField->isOpen(this); }
 
 private:
-	
+	int m_speed;
 };
