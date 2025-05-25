@@ -11,7 +11,7 @@
 bool Player::m_conquered = false;
 
 Player::Player(sf::Vector2f position, int life)
-	: Object(position, sf::Color::Green, SQUARE_SIZE), m_life(life), m_firstPosition(position)
+	: Object(position, sf::Color::Green), m_life(life), m_firstPosition(position)
 {
 	m_playerDead = false;
 	m_directionX = 0;
@@ -114,7 +114,7 @@ void Player::move(float time)
 	timeMove += time;
 	if (timeMove > 0.1)
 	{
-		Object::move(1);
+		Object::move(SQUARE_SIZE);
 		timeMove -= 0.1;
 	}
 }

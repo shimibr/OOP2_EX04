@@ -6,8 +6,8 @@
 #include "SquareFieldClosed.h"
 #include "Player.h"
 
-Enemy::Enemy(sf::Vector2f position, sf::Color color)
-	: Object(position, color, 60)
+Enemy::Enemy(sf::Vector2f position)
+	: Object(position, sf::Color::Red),m_speed(60)
 {
 	do
 	{

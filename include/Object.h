@@ -8,7 +8,7 @@ class SquareFieldOpen;
 class Object : public Square
 {
 public:
-	Object(sf::Vector2f position,sf::Color color, int speed);
+	Object(sf::Vector2f position,sf::Color color);
 	virtual ~Object() {};
 	virtual void move(float time);
 	static bool playerIsDead() { return m_playerDead; }
@@ -34,5 +34,5 @@ protected:
 private:
 	float m_timeMove;
 	bool m_moveX = true;
-	int m_speed;
+	
 };
