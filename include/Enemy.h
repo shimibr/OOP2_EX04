@@ -12,11 +12,11 @@ public:
 
 	void collision(SquareField* squareField) override;
 	void collision(Object* other) override;
-	void collideWith(class Player* player) override;
+
+	void collideWith(class Player* player) override{ m_playerDead = true; }
 	void collideWith(class Enemy* enemy) override {}
-	
-	void collideWith(SquareFieldTrail* squareFieldTrail) override;
-	void collideWith(SquareFieldClosed* squareFieldClosed) override;
+	void collideWith(SquareFieldTrail* squareFieldTrail) override{ m_playerDead = true; }
+	void collideWith(SquareFieldClosed* squareFieldClosed) override{ moveBack(); }
 	void collideWith(SquareFieldOpen* squareFieldOpen) override {}
 
 	bool isOpen(SquareField* squareField) override { return squareField->isOpen(this); }

@@ -12,18 +12,18 @@ public:
 
 	void move(float time) override;
 	void draw(sf::RenderWindow& window) override;
+	void reset() override;
 
 	void collision(SquareField* squareField) override;
 	void collision(Object* other) override;
-	void collideWith(class Player* player) override;
-	void collideWith(class Enemy* enemy) override;
+	void collideWith(class Player* player) override{}
+	void collideWith(class Enemy* enemy) override{ m_playerDead = true; }
 
 	void collideWith(SquareFieldTrail* squareFieldTrail) override;
 	void collideWith(SquareFieldClosed* squareFieldClosed) override;
 	void collideWith(SquareFieldOpen* squareFieldOpen) override;
 
 	bool isOpen(SquareField* squareField) override { return squareField->isOpen(this); }
-	void reset() override;
 
 
 private:

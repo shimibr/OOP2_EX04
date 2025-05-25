@@ -19,8 +19,3 @@ bool SquareField::isOpen(Player* player)
 	 m_changeToType = SquareType::Closed; return true; 
 }
 //==================================
-void SquareField::checkSquareFieldToTrail(std::unique_ptr<SquareField>& squareField)
-{
-	squareField  = std::make_unique<SquareFieldTrail>(getGlobalBounds().getPosition());
-}
-//==================================

@@ -7,7 +7,7 @@
 #include "Player.h"
 
 Enemy::Enemy(sf::Vector2f position, sf::Color color)
-	: Object(position, color, 50)
+	: Object(position, color, 60)
 {
 	do
 	{
@@ -31,24 +31,4 @@ void Enemy::collision(Object* other)
 		other->collideWith(this);
 	}
 }
-//==================================
-void Enemy::collideWith(Player* player)
-{
-	if (this->getGlobalBounds().intersects(player->getGlobalBounds()))
-	{
-		m_playerDead = true;
-	}
-}
-//==================================
-void Enemy::collideWith(SquareFieldTrail* squareFieldTrail)
-{
-	m_playerDead = true;
-}
 //===================================
-void Enemy::collideWith(SquareFieldClosed* squareFieldClosed)
-{
-			moveBack();
-}
-//===================================
-
-//==================================

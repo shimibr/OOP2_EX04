@@ -27,10 +27,7 @@ void SquareFieldClosed::collideWith(Player* player)
 //==================================
 void SquareFieldClosed::collideWith(Enemy* enemy)
 {
-	if (this->getGlobalBounds().intersects(enemy->getGlobalBounds()))
-	{
-		enemy->collideWith(this);
-	}
+	enemy->collideWith(this);
 }
 //==================================
 bool SquareFieldClosed::isOpen(Player* player)
