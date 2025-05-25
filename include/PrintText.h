@@ -7,8 +7,8 @@ class PrintText
 public:
     static PrintText& getInstance(); // נקודת גישה יחידה למופע
 
-    void drawText(sf::RenderWindow& window, const std::string& str, unsigned int size,
-        sf::Color color, sf::Vector2f position );
+    void drawText(sf::RenderWindow& window, const std::string& str, unsigned int size, sf::Color color, sf::Vector2f position);
+    void drawText(sf::RenderWindow& window, const std::string& str, unsigned int size, sf::Color color, sf::Vector2f position, int wait);
 
 private:
     PrintText();                      // בנאי פרטי

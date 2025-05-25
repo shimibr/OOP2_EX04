@@ -32,11 +32,15 @@ void Controller::run()
 
 			if(Object::playerIsDead())
 			{
-				m_window.clear();
-				PrintText::getInstance().drawText(m_window, "Game over!", 50, sf::Color::Red, sf::Vector2f(0, 0));
-				m_window.display();
-				sf::sleep(sf::seconds(2)); // מחכה 2 שניות לפני סגירת החלון
-				m_window.close();
+				PrintText::getInstance().drawText(m_window, "Game over!", 50, sf::Color::Red, sf::Vector2f(0, 0), 2);
+				PrintText::getInstance().drawText(m_window, "Press enter to exit ... ", 30, sf::Color::White, sf::Vector2f(m_window.getSize().x / 2, m_window.getSize().y / 2), 0);
+				
+				sf::Event event;
+				while (m_window.waitEvent(event))
+				{
+					if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter)
+						m_window.close();
+				}
 				return;
 			}
 
@@ -64,10 +68,7 @@ void Controller::run()
 			}
 			if (Object::playerIsDead())
 			{
-				m_window.clear();
-				PrintText::getInstance().drawText(m_window, "You are disqualified! Be careful!", 50, sf::Color::Red, sf::Vector2f(0, 0));
-				m_window.display();
-				sf::sleep(sf::seconds(1)); // מחכה 1 שניות לפני סגירת החלון
+				PrintText::getInstance().drawText(m_window, "You are disqualified! Be careful!", 50, sf::Color::Red, sf::Vector2f(0, 0), 1);
 				resetDisqualification();
 			}
 
@@ -79,12 +80,9 @@ void Controller::run()
 
 			if (SquareFieldClosed::getCount() >= m_sumSquare / 100 * m_info[3])
 			{
-				sf::sleep(sf::seconds(1));
-				m_window.clear();
-				PrintText::getInstance().drawText(m_window, "Good job! You won!", 50, sf::Color::Green, sf::Vector2f(0,0));
-				m_window.display();
+				PrintText::getInstance().drawText(m_window, "Good job! You won!", 50, sf::Color::Green, sf::Vector2f(0,0), 2);
+				PrintText::getInstance().drawText(m_window, "Press enter to continu ... ", 30, sf::Color::White, sf::Vector2f(m_window.getSize().x / 2, m_window.getSize().y /2), 0);
 				m_stage++;
-
 
 				sf::Event event;
 				while (m_window.waitEvent(event))

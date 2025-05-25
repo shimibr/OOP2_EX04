@@ -28,10 +28,16 @@ void PrintText::drawText(sf::RenderWindow& window, const std::string& str, unsig
 	else
 		text.setPosition(position);
 
-    // אפשרות למרכז את הטקסט:
     auto bounds = text.getLocalBounds();
     text.setOrigin(bounds.width / 2, bounds.height / 2);
 
     window.draw(text);
-//	window.display();
+}
+//=====================================
+void PrintText::drawText(sf::RenderWindow& window, const std::string& str, unsigned int size, sf::Color color, sf::Vector2f position, int wait)
+{
+    window.clear();
+    drawText(window, str, size, color, position);
+    window.display();
+    sf::sleep(sf::seconds(wait));
 }
