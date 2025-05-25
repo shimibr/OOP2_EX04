@@ -138,8 +138,8 @@ void Controller::fillObject() // פה צריך למלאת את המערך של המלבנים
 	m_object.push_back(std::make_unique<Player>(sf::Vector2f(0, 0), m_info[2]));
 	for (int i = 0; i < m_info[4]; ++i)
 	{
-		int x = (rand() % (m_info[0] - 3 * SQUARE_SIZE)) + SQUARE_SIZE;
-		int y = (rand() % (m_info[1] - 3 * SQUARE_SIZE)) + SQUARE_SIZE;
+		int x = (rand() % (m_info[0] - 3 * SQUARE_SIZE)) + 2 * SQUARE_SIZE;
+		int y = (rand() % (m_info[1] - 5 * SQUARE_SIZE)) + 2 * SQUARE_SIZE;
 			m_object.push_back(std::make_unique<Enemy>(sf::Vector2f(x,y), sf::Color::Red));
 	}
 }

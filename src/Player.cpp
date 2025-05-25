@@ -87,6 +87,7 @@ void Player::reset()
 		m_position = m_firstPosition;
 		setPosition();
 		m_playerDead = false;
+		m_middleOfConquer = false;
 	}
 }
 //==================================
