@@ -18,7 +18,7 @@ public:
 
 	virtual bool isOpen(Enemy* enemy){ return false; }
 	virtual bool isOpen(Player* player);
-	virtual void reset() {};
+	virtual void reset() { m_changeToType = SquareType::Default; }
 	
 protected:
 	void checkSquareFieldToTrail(std::unique_ptr <SquareField>& squareField);
