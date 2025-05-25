@@ -22,10 +22,10 @@ void Controller::run()
 		m_sumSquare = (m_info[0] / SQUARE_SIZE) * (m_info[1] / SQUARE_SIZE);
 		m_window.setFramerateLimit(60);
 
-		fillObject();
-		fillSquares();
-
 		m_clock.restart();
+		fillSquares();
+		fillObject();
+
 		while (m_window.isOpen())
 		{
 
@@ -47,6 +47,8 @@ void Controller::run()
 			}
 
 			float time = m_clock.restart().asSeconds();
+			if (time > 0.2f) // מגביל את הזמן למקסימום של 0.2 שניות - עמ להתמודד עם מחשבים איטיים
+				time = 0.2f;
 			for (int i = 0; i < 2; i++)
 			{
 				moveObject(time);
