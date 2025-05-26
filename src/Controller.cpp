@@ -28,7 +28,10 @@ void Controller::run()
 
 		m_clock.restart();
 		while (m_window.isOpen())
-			runLevel();
+		{
+			if (!runLevel())
+				return;
+		}
 
 	deleteGame();
 	}
@@ -270,7 +273,7 @@ void Controller::checkPlayersStatus()
 		playerWon();
 }
 //======================================
-void Controller::runLevel()
+bool Controller::runLevel()
 {
 	playerDead();
 
@@ -280,7 +283,7 @@ void Controller::runLevel()
 		if (event.type == sf::Event::Closed)
 		{
 			m_window.close();
-			return;
+			return false;
 		}
 	}
 
@@ -299,5 +302,6 @@ void Controller::runLevel()
 	drawSquares();
 	drawObject();
 	m_window.display();
+	return true;
 }
 //=======================================

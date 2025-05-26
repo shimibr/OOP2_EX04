@@ -18,5 +18,5 @@ private:
     PrintText& operator=(const PrintText&) = delete; 
 
     sf::Font m_font;
-    sf::Text text;
+    sf::Text m_text;
 };

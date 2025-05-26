@@ -30,7 +30,7 @@ private:
 	void playerWon();
 	void playerDead();
 	void checkPlayersStatus();
-	void runLevel();
+	bool runLevel();
 
 	sf::RenderWindow m_window;
 	std::vector<std::unique_ptr<Object>> m_object;
