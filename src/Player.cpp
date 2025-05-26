@@ -43,8 +43,6 @@ void Player::collideWith(SquareFieldTrail* squareFieldTrail)
 //==================================
 void Player::collideWith(SquareFieldClosed* squareFieldClosed)
 {
-	m_directionX = 0;
-	m_directionY = 0;
 
 	if(m_middleOfConquer)
 	{
@@ -84,7 +82,7 @@ bool Player::isConquered()
 void Player::move(float time)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-	{	
+	{
 		m_directionX = -1;
 		m_directionY = 0;
 	}
@@ -103,6 +101,11 @@ void Player::move(float time)
 		
 		m_directionX = 0;
 		m_directionY = 1;
+	}
+	else
+	{
+		m_directionX = 0;
+		m_directionY = 0;
 	}
 
 	static float timeMove = 0;
