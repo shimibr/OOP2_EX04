@@ -241,6 +241,7 @@ void Controller::playerWon()
 			m_window.close();
 	}
 }
+//======================================
 void Controller::playerDead()
 {
 	if (Object::playerIsDead())

@@ -24,5 +24,5 @@ public:
 	bool isOpen(SquareField* squareField) override { return squareField->isOpen(this); }
 
 private:
-	int m_speed;
+	
 };
